@@ -1,14 +1,31 @@
 import React from 'react'
 import right_arrow from '../assets/right-arrow.png'
+import { motion } from 'framer-motion'
 
 const Services = () => {
   return (
     <div id="services" className="w-full px-[12%] py-10 scroll-mt-20">
-    <h4 className="text-center mb-2 text-lg font-Ovo">What I can offer</h4>
-    <h2 className="text-center text-5xl font-Ovo">My services</h2>
-    <p className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">I am a Deep Learning enthusiast studying in VIT Chennai, India with 2 years of experience learning and applying Deep Learning and GenAI for public welfare.</p>
+    <motion.h4 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-2 text-lg font-Ovo">What I can offer</motion.h4>
+    <motion.h2 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-center text-5xl font-Ovo">My services</motion.h2>
+    <motion.p 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo">I am a Deep Learning enthusiast studying in VIT Chennai, India with 2 years of experience learning and applying Deep Learning and GenAI for public welfare.</motion.p>
 
-    <div className="grid grid-cols-auto gap-6 my-10">
+    <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="grid grid-cols-auto gap-6 my-10">
         <div className="border border-gray-400 rounded-lg px-8 py-12
         hover:shadow-black cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 dark:hover:bg-darkHover dark:hover:shadow-white">
             {/* Deep Learning SVG - Brain with connections */}
@@ -25,11 +42,10 @@ const Services = () => {
               <line x1="28" y1="30" x2="24" y2="24" stroke="currentColor" strokeWidth="2"/>
             </svg>
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">Deep Learning Engineer</h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80"><p>1) Familiar with PyTorch for training neural networks.</p>
-
-<p>2) Worked on image classification, object detection, and NLP tasks.</p>
-
-<p>3) Basic understanding of model optimization techniques.</p>
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+                <span>1) Familiar with PyTorch for training neural networks.</span><br />
+                <span>2) Worked on image classification, object detection, and NLP tasks.</span><br />
+                <span>3) Basic understanding of model optimization techniques.</span>
             </p>
     
         </div>
@@ -52,11 +68,11 @@ const Services = () => {
               <line x1="28" y1="24" x2="32" y2="24" stroke="currentColor" strokeWidth="2"/>
             </svg>
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">Image Processing</h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80"><p>1) Knowledge of CNNs for image classification and feature extraction.</p><p>2) Knowledge of CNNs for image classification and feature extraction.</p>
-
-<p>3) Experience with YOLO for real-time object detection.</p>
-
-<p>4) Exposure to Vision Transformers (ViT) for image classification.</p>
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+                <span>1) Knowledge of CNNs for image classification and feature extraction.</span><br />
+                <span>2) Knowledge of CNNs for image classification and feature extraction.</span><br />
+                <span>3) Experience with YOLO for real-time object detection.</span><br />
+                <span>4) Exposure to Vision Transformers (ViT) for image classification.</span>
             </p>
             
         </div>
@@ -69,7 +85,11 @@ const Services = () => {
               <path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M10 38l4-4M34 14l4-4" stroke="currentColor" strokeWidth="2"/>
             </svg>
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">GenAI</h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80"><p>1) Hands-on experience with GPT and BERT for NLP tasks.</p> <p>2) Worked on projects like chatbots, text summarization, and sentiment analysis.</p> <p>3) Familiar with fine-tuning and applying transformers.</p></p>
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+                <span>1) Hands-on experience with GPT and BERT for NLP tasks.</span><br />
+                <span>2) Worked on projects like chatbots, text summarization, and sentiment analysis.</span><br />
+                <span>3) Familiar with fine-tuning and applying transformers.</span>
+            </p>
             
         </div>
         <div className="border border-gray-400 rounded-lg px-8 py-12
@@ -86,7 +106,11 @@ const Services = () => {
               </g>
             </svg>
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">GIT</h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80"><p>1) Basic knowledge of Git for version control and collaboration.</p> <p>2) Experience in managing Git repositories, branching, and merge conflicts.</p> <p>3) Comfortable using GitHub for project hosting.</p></p>
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+                <span>1) Basic knowledge of Git for version control and collaboration.</span><br />
+                <span>2) Experience in managing Git repositories, branching, and merge conflicts.</span><br />
+                <span>3) Comfortable using GitHub for project hosting.</span>
+            </p>
             
         </div>
         <div className="border border-gray-400 rounded-lg px-8 py-12
@@ -100,10 +124,14 @@ const Services = () => {
               <line x1="8" y1="40" x2="42" y2="40" stroke="currentColor" strokeWidth="2"/>
             </svg>
             <h3 className="text-lg my-4 text-gray-700 dark:text-white">Data Visualization</h3>
-            <p className="text-sm text-gray-600 leading-5 dark:text-white/80"><p>1) Experience with Matplotlib, Seaborn, and Plotly for data visualization.</p> <p>2) Worked on creating visual representations of data.</p> <p>3) Familiar with generating interactive charts and dashboards.</p></p>
+            <p className="text-sm text-gray-600 leading-5 dark:text-white/80">
+                <span>1) Experience with Matplotlib, Seaborn, and Plotly for data visualization.</span><br />
+                <span>2) Worked on creating visual representations of data.</span><br />
+                <span>3) Familiar with generating interactive charts and dashboards.</span>
+            </p>
             
         </div>
-    </div>
+    </motion.div>
   </div>
   )
 }

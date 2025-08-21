@@ -13,23 +13,40 @@ import firebase from '../assets/firebase.png'
 import figma from '../assets/figma.png'
 import git from '../assets/git.png'
 import mongodb from '../assets/mongodb.png'
+import { motion } from 'framer-motion'
 
 const About = () => {
   return (
     <div id="about" className="w-full px-[12%] py-10 scroll-mt-20">
-    <h4 className="text-center mb-2 text-lg font-Ovo">Introduction</h4>
-    <h2 className="text-center text-5xl font-Ovo">About me</h2>
+    <motion.h4 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-2 text-lg font-Ovo">Introduction</motion.h4>
+    <motion.h2 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-center text-5xl font-Ovo">About me</motion.h2>
 
     <div className="flex w-full flex-col lg:flex-row items-center gap-20 my-20">
-        <div className="max-w-max mx-auto relative">
+        <motion.div 
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="max-w-max mx-auto relative">
             <img src={user_image} alt="" className="w-64 sm:w-80 rounded-3xl max-w-none"/>
 
             <div className="bg-white w-1/2 aspect-square absolute right-0 bottom-0 rounded-full translate-x-1/4 translate-y-1/3 shadow-[0_4px_55px_rgba(149,0,162,0.15)] flex items-center justify-center">
                 <img src={circular_text} alt="" className="w-full animate-spin_slow"/>
                 <img src={dev_icon} alt="" className="w-1/4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"/>
             </div>
-        </div>
-        <div className="flex-1">
+        </motion.div>
+        <motion.div 
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex-1">
             <p className="mb-10 max-w-2xl font-Ovo">I am an aspiring Deep Learning Engineer currently in my BTech 3rd year from VIT Chennai, with hands-on experience in building intelligent systems using CNNs (YOLO), Vision Transformers, and LLMs. I’ve worked on diverse projects that integrate AI with real-world applications—from medical imaging to government chatbot solutions. I actively explore modern development workflows using Git and GitHub, and I present my insights through clean, interactive data visualizations.</p>
 
             <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl">
@@ -79,7 +96,7 @@ const About = () => {
                     <img src={git} alt="" className="w-1 sm:w-20"/>
                 </li>
             </ul>
-        </div>
+        </motion.div>
     </div>
  </div>
   )

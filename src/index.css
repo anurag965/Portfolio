@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --particle-color: #000000;
+}
+
+.dark {
+  --particle-color: #ffffff;
+}
+
+body {
+  @apply bg-white dark:bg-darkTheme;
+}
