@@ -5,13 +5,29 @@
     <link rel="icon" type="image/svg+xml" href="/Portfolio/dev-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio - Anurag</title>
+    
+    <script>
+      // Theme initialization script to prevent flash
+      (function() {
+        try {
+          const theme = localStorage.getItem('theme');
+          const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (theme === 'dark' || (!theme && supportDarkMode)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Ovo&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/Portfolio/assets/index-C0YVbSlA.js"></script>
-    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-C7pUyxFS.css">
+    <script type="module" crossorigin src="/Portfolio/assets/index-BQX9x3LI.js"></script>
+    <link rel="stylesheet" crossorigin href="/Portfolio/assets/index-Bnx5DqDG.css">
   </head>
-  <body class="overflow-x-hidden font-Outfit leading-8 dark:bg-darkTheme dark:text-white">
+  <body class="overflow-x-hidden font-Outfit leading-8 bg-white dark:bg-[#0a0a0a]">
     <div id="root"></div>
   </body>
 </html>
