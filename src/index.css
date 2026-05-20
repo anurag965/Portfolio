@@ -4,12 +4,103 @@
 
 :root {
   --particle-color: #000000;
+  --science-blue: #2563eb;
+  --tech-glow: rgba(37, 99, 235, 0.05);
 }
 
 .dark {
   --particle-color: #ffffff;
+  --science-blue: #3b82f6;
+  --tech-glow: rgba(59, 130, 246, 0.1);
+}
+
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+}
+
+.dark .bg-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.ambient-glow {
+  @apply fixed inset-0 pointer-events-none z-0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
+}
+
+.dark .ambient-glow {
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+}
+
+.scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.02) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+.dark .scanline {
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(255, 255, 255, 0.02) 50%
+  );
+}
+
+@keyframes scan-v {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.tech-border {
+  @apply relative border border-black/10 dark:border-white/10;
+}
+
+.tech-border::before, .tech-border::after {
+  content: "";
+  @apply absolute w-2 h-2 border-blue-500;
+}
+
+.tech-border::before {
+  @apply top-0 left-0 border-t-2 border-l-2;
+}
+
+.tech-border::after {
+  @apply bottom-0 right-0 border-b-2 border-r-2;
 }
 
 body {
-  @apply bg-white dark:bg-darkTheme;
+  @apply bg-white dark:bg-[#0a0a0a] text-black dark:text-white font-Outfit antialiased;
+}
+
+.glass-card {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-sm;
+}
+
+/* Custom scrollbar for a professional look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-700;
 }
