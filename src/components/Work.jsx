@@ -45,10 +45,10 @@ const Work = () => {
 
             <div className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
                 <div>
-                    <h2 className="font-semibold">CMCA-ActionNet</h2>
-                    <p className="text-sm text-gray-700">PyTorch, Transformers, MediaPipe, Optical Flow, Causal Attention</p>
+                    <h2 className="font-semibold">Brain Tumor Segmentation</h2>
+                    <p className="text-sm text-gray-700">Deep Learning, BEiT, Segmentation, PyTorch, Vision Transformers</p>
                 </div>
-                <a href="https://github.com/anurag965/CMCA-ActionNet" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/anurag965/Brain-Tumor-Segmentation" target="_blank" rel="noopener noreferrer">
                 <div className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
                     <img src={send_icon} alt="" className="w-5"/>
                 </div></a>
