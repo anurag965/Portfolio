@@ -58,10 +58,10 @@ const Work = () => {
         link: "https://github.com/anurag965"
     },
     {
-        title: "SentinelVision — Action Detection",
-        tech: "PyTorch, Transformers, VQ-VAE, Optical Flow, MediaPipe",
+        title: "CMCA-ActionNet – Spatio-Temporal Multimodal Action Detection",
+        tech: "PyTorch, Causal Attention, JHMDB Dataset, MediaPipe",
         bgImage: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
-        link: "https://github.com/anurag965/SentinelVision"
+        link: "https://github.com/anurag965"
     },
     {
         title: "Brain Tumor Segmentation",
