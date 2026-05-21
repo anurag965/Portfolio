@@ -58,8 +58,8 @@ const Work = () => {
         link: "https://github.com/anurag965"
     },
     {
-        title: "CMCA-ActionNet – Spatio-Temporal Multimodal Action Detection",
-        tech: "PyTorch, Causal Attention, JHMDB Dataset, MediaPipe",
+        title: "CMCA ActionNet – Spatio Temporal Multimodal Action Detection",
+        tech: "PyTorch, Causal Attention, JHMDB Dataset, Optical Flow, MediaPipe",
         bgImage: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
         link: "https://github.com/anurag965"
     },
