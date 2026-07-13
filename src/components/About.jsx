@@ -68,7 +68,7 @@ const About = () => (
           <img 
             src={user_image} 
             alt="Anurag Pradhan Formal"
-            className="w-full h-auto max-h-64 object-contain rounded" 
+            className="w-full h-full min-h-[240px] max-h-[300px] object-cover object-top rounded" 
             style={{ filter: 'grayscale(15%) brightness(0.9) contrast(1.05)' }}
           />
         </div>
