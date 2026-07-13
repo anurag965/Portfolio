@@ -36,8 +36,8 @@ const About = () => (
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="md:col-span-2 p-5 rounded-lg text-base leading-loose flex flex-col justify-between"
-        style={{ background: 'var(--bg-surface)', border: '1px solid var(--border-dim)', color: 'var(--text-secondary)' }}
+        className="md:col-span-2 p-5 rounded-lg text-base leading-loose flex flex-col justify-between term-block"
+        style={{ color: 'var(--text-secondary)' }}
       >
         <div>
           <div className="text-xs mb-3" style={{ color: 'var(--text-dim)' }}>{'# ~/.profile'}</div>
@@ -58,10 +58,9 @@ const About = () => (
         initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="rounded-lg overflow-hidden border flex flex-col"
-        style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-surface)' }}
+        className="rounded-lg overflow-hidden flex flex-col term-block"
       >
-        <div className="flex items-center gap-2 px-3 py-2 border-b text-[10px] font-Mono shrink-0" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-surface)' }}>
+        <div className="flex items-center gap-2 px-3 py-2 border-b text-[10px] font-Mono shrink-0" style={{ borderColor: 'var(--border-dim)', background: 'rgba(255, 255, 255, 0.02)' }}>
           <span style={{ color: 'var(--yellow)' }}>🖼️</span>
           <span style={{ color: 'var(--text-secondary)' }}>formal_photo.png</span>
         </div>

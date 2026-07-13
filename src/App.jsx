@@ -27,9 +27,16 @@ const App = () => {
       <div className="crt-beam"      aria-hidden="true" />
       <div className="crt-grid"      aria-hidden="true" />
 
+      {/* Apple Glass Background Blobs */}
+      <div className="glass-bg-blobs" aria-hidden="true">
+        <div className="glass-blob glass-blob-1" />
+        <div className="glass-blob glass-blob-2" />
+        <div className="glass-blob glass-blob-3" />
+      </div>
+
       <div
         className={`relative z-10 min-h-screen flex flex-col transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-        style={{ background: 'var(--bg)' }}
+        style={{ background: 'transparent' }}
       >
         <Navbar />
         <GutterSidebars />

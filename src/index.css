@@ -6,11 +6,11 @@
    DESIGN TOKENS — Modern Dark IDE
    ══════════════════════════════════════════════ */
 :root {
-  --bg:          #0d1117;   /* GitHub dark base */
-  --bg-surface:  #161b22;   /* slightly lighter panel */
-  --bg-hover:    #1c2128;
-  --border:      #30363d;
-  --border-dim:  #21262d;
+  --bg:          #080a0f;   /* Deeper dark base for glass blobs contrast */
+  --bg-surface:  rgba(15, 20, 30, 0.45);   /* Translucent surface */
+  --bg-hover:    rgba(255, 255, 255, 0.04);
+  --border:      rgba(255, 255, 255, 0.12);
+  --border-dim:  rgba(255, 255, 255, 0.06);
 
   --text-primary:   #e6edf3;
   --text-secondary: #8b949e;
@@ -31,11 +31,11 @@
 
 /* Light Theme Variables */
 .light {
-  --bg:          #f6f8fa;   /* GitHub light base */
-  --bg-surface:  #ffffff;   /* white panel */
-  --bg-hover:    #eaeef2;
-  --border:      #d0d7de;   /* GitHub light border */
-  --border-dim:  #d8dee4;
+  --bg:          #f2f4f8;   /* Light base */
+  --bg-surface:  rgba(255, 255, 255, 0.55);   /* Translucent surface */
+  --bg-hover:    rgba(0, 0, 0, 0.03);
+  --border:      rgba(0, 0, 0, 0.12);
+  --border-dim:  rgba(0, 0, 0, 0.06);
 
   --text-primary:   #24292f;   /* dark gray/black text */
   --text-secondary: #57606a;
@@ -151,6 +151,8 @@ html, body {
 .term-titlebar {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-dim);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
 
 .term-tab-active {
@@ -202,15 +204,39 @@ html, body {
    COMPONENTS
    ══════════════════════════════════════════════ */
 
-/* Generic block container */
+/* Generic block container - Apple Glass Display style */
 .term-block {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-dim);
-  border-radius: 6px;
-  transition: border-color 0.2s;
+  background: rgba(15, 20, 30, 0.45) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 .term-block:hover {
-  border-color: var(--border);
+  background: rgba(15, 20, 30, 0.55) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+}
+
+.light .term-block {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+}
+.light .term-block:hover {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Buttons */
@@ -329,4 +355,98 @@ html, body {
   background: var(--bg-hover);
   border: 1px solid var(--border-dim);
   border-radius: 20px;
+}
+
+/* ══════════════════════════════════════════════
+   APPLE GLASS DISPLAY BACKGROUNDS
+   ══════════════════════════════════════════════ */
+.glass-bg-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.glass-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.16;
+  mix-blend-mode: screen;
+  animation: floatBlobs 25s ease-in-out infinite alternate;
+}
+.glass-blob-1 {
+  top: -10%;
+  left: -5%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(88, 166, 255, 0.75) 0%, rgba(31, 111, 235, 0) 70%);
+  animation-delay: 0s;
+}
+.glass-blob-2 {
+  bottom: -5%;
+  right: -5%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(218, 125, 32, 0.55) 0%, rgba(218, 125, 32, 0) 70%);
+  animation-duration: 32s;
+  animation-delay: -5s;
+}
+.glass-blob-3 {
+  top: 35%;
+  left: 45%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(184, 32, 230, 0.5) 0%, rgba(184, 32, 230, 0) 70%);
+  animation-duration: 28s;
+  animation-delay: -10s;
+}
+
+@keyframes floatBlobs {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(6%, 10%) scale(1.1);
+  }
+  100% {
+    transform: translate(-4%, -6%) scale(0.9);
+  }
+}
+
+.apple-glass {
+  background: rgba(15, 20, 30, 0.45) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+.apple-glass:hover {
+  background: rgba(15, 20, 30, 0.55) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+}
+
+.light .glass-blob {
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+.light .apple-glass {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+}
+.light .apple-glass:hover {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
 }

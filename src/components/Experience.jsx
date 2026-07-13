@@ -76,7 +76,7 @@ const Experience = () => (
           className="term-block overflow-hidden"
         >
           {/* File header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 px-4 py-2.5 text-xs sm:text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 px-4 py-2.5 text-xs sm:text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'rgba(255, 255, 255, 0.02)' }}>
             <div className="flex items-center gap-2.5">
               <span style={{ color: 'var(--text-dim)' }}>-rwxr-xr-x</span>
               <span style={{ color: 'var(--text-dim)' }}>anurag</span>

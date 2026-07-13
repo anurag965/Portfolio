@@ -68,10 +68,10 @@ const Terminal = () => {
     return (
         <div 
             onClick={focusInput}
-            className="w-full bg-[#0a0a0a] rounded-2xl border border-blue-500/20 shadow-2xl overflow-hidden font-Mono text-[11px] md:text-[12px] text-gray-300 cursor-text"
+            className="w-full apple-glass rounded-2xl overflow-hidden font-Mono text-[11px] md:text-[12px] text-gray-300 cursor-text"
         >
             {/* Header / Title Bar */}
-            <div className="bg-[#111] border-b border-white/5 px-4 py-3 flex items-center justify-between select-none">
+            <div className="border-b border-white/5 px-4 py-3 flex items-center justify-between select-none" style={{ background: 'rgba(255, 255, 255, 0.02)' }}>
                 <div className="flex gap-2">
                     <span className="w-3 h-3 bg-red-500/70 rounded-full"></span>
                     <span className="w-3 h-3 bg-yellow-500/70 rounded-full"></span>
@@ -197,7 +197,7 @@ const Terminal = () => {
             </div>
 
             {/* Quick-Click Command Badges */}
-            <div className="px-5 py-3 bg-[#111]/80 border-t border-white/5 flex flex-wrap gap-2 items-center">
+            <div className="px-5 py-3 border-t border-white/5 flex flex-wrap gap-2 items-center" style={{ background: 'rgba(255, 255, 255, 0.01)' }}>
                 <span className="text-[10px] uppercase font-bold text-gray-500 mr-2 tracking-widest font-Mono select-none">Shortcuts:</span>
                 {['help', 'neofetch', 'skills', 'projects', 'contact', 'quote', 'clear'].map((cmd) => (
                     <button
@@ -207,7 +207,7 @@ const Terminal = () => {
                             e.stopPropagation();
                             handleCommand(cmd);
                         }}
-                        className="px-3 py-1.5 bg-[#181818] hover:bg-blue-600/20 border border-white/5 hover:border-blue-500/40 rounded-md text-[10px] text-gray-400 hover:text-blue-400 font-Mono transition-all duration-300"
+                        className="px-3 py-1.5 bg-white/5 hover:bg-blue-600/20 border border-white/5 hover:border-blue-500/40 rounded-md text-[10px] text-gray-400 hover:text-blue-400 font-Mono transition-all duration-300"
                     >
                         {cmd}
                     </button>
@@ -215,7 +215,7 @@ const Terminal = () => {
             </div>
 
             {/* Input Prompt Form */}
-            <form onSubmit={handleSubmit} className="px-5 py-4 bg-[#070707] border-t border-white/5 flex items-center gap-2">
+            <form onSubmit={handleSubmit} className="px-5 py-4 bg-black/25 border-t border-white/5 flex items-center gap-2">
                 <span className="text-blue-500 font-bold select-none shrink-0"><span className="hidden sm:inline">guest@anurag-sys:</span>~$</span>
                 <input 
                     ref={inputRef}

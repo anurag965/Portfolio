@@ -133,9 +133,9 @@ const Navbar = () => {
       <div
         ref={sideMenuRef}
         className="fixed inset-0 z-[200] -translate-x-full transition-transform duration-500 flex"
-        style={{ background: 'var(--bg-surface)' }}
+        style={{ background: 'rgba(10, 12, 16, 0.7)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
       >
-        <div className="w-72 h-full flex flex-col p-8 gap-8 border-r" style={{ borderColor: 'var(--border-dim)' }}>
+        <div className="w-72 h-full flex flex-col p-8 gap-8 border-r" style={{ borderColor: 'var(--border-dim)', background: 'rgba(15, 20, 30, 0.4)' }}>
           <div className="flex items-center justify-between">
             <span className="text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>// navigation</span>
             <button onClick={closeMenu} className="text-xl font-Mono" style={{ color: 'var(--text-secondary)' }}>✕</button>

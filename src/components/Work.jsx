@@ -66,7 +66,7 @@ const Work = () => {
         viewport={{ once: true }}
         className="term-block mb-12 overflow-hidden"
       >
-        <div className="flex items-center gap-3 px-4 py-2.5 text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
+        <div className="flex items-center gap-3 px-4 py-2.5 text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'rgba(255, 255, 255, 0.02)' }}>
           <span style={{ color: 'var(--purple, #bc8cff)' }}>@article</span>
           <span style={{ color: 'var(--text-dim)' }}>{`{anurag_aacl2025}`}</span>
           <span className="ml-auto text-sm font-bold" style={{ color: STATUS_COLOR[publication.status] }}>
