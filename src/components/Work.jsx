@@ -43,7 +43,7 @@ const Work = () => {
   const [expanded, setExpanded] = useState(null)
 
   return (
-    <section id="work" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+    <section id="work" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
       {/* Section heading */}
       <div className="mb-8">
@@ -107,20 +107,31 @@ const Work = () => {
             {/* Log line */}
             <button
               onClick={() => setExpanded(expanded === i ? null : i)}
-              className="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded text-sm font-Mono transition-colors group"
+              className="w-full text-left flex flex-col md:flex-row md:items-center gap-2 md:gap-3 px-3 py-2.5 rounded text-sm font-Mono transition-colors group"
               style={{ background: expanded === i ? 'var(--bg-surface)' : 'transparent' }}
               onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-surface)'}
               onMouseLeave={e => e.currentTarget.style.background = expanded === i ? 'var(--bg-surface)' : 'transparent'}
             >
-              <span style={{ color: 'var(--text-dim)' }}>*</span>
-              <span style={{ color: '#e3b341' }}>{p.hash}</span>
-              <span style={{ color: 'var(--text-dim)' }}>({p.date})</span>
-              <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>
-                {p.branch}
-              </span>
-              <span className="flex-1 font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{p.title}</span>
-              <span className="shrink-0 text-sm font-bold" style={{ color: STATUS_COLOR[p.status] }}>{p.status}</span>
-              <span style={{ color: 'var(--text-dim)' }}>{expanded === i ? '▼' : '▶'}</span>
+              {/* Top row: commit metadata */}
+              <div className="flex items-center gap-2 w-full md:w-auto">
+                <span style={{ color: 'var(--text-dim)' }}>*</span>
+                <span style={{ color: '#e3b341' }}>{p.hash}</span>
+                <span className="whitespace-nowrap" style={{ color: 'var(--text-dim)' }}>({p.date})</span>
+                <span className="px-1.5 py-0.5 rounded text-xs whitespace-nowrap" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>
+                  {p.branch}
+                </span>
+                <span className="md:hidden ml-auto shrink-0 text-xs font-bold" style={{ color: STATUS_COLOR[p.status] }}>{p.status}</span>
+                <span className="md:hidden text-xs" style={{ color: 'var(--text-dim)' }}>{expanded === i ? '▼' : '▶'}</span>
+              </div>
+
+              {/* Title & right-side indicators */}
+              <div className="flex-1 flex items-center justify-between gap-3 w-full pl-5 md:pl-0">
+                <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{p.title}</span>
+                <div className="hidden md:flex items-center gap-3 shrink-0">
+                  <span className="text-sm font-bold" style={{ color: STATUS_COLOR[p.status] }}>{p.status}</span>
+                  <span style={{ color: 'var(--text-dim)' }}>{expanded === i ? '▼' : '▶'}</span>
+                </div>
+              </div>
             </button>
 
             {/* Expanded */}

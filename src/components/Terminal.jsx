@@ -109,16 +109,16 @@ const Terminal = () => {
                                 {/* Right Details */}
                                 <div className="md:col-span-8 space-y-1 text-gray-300 text-[11px] md:text-[12px] leading-relaxed font-Mono">
                                     <div className="text-gray-400 font-bold"><span className="text-blue-400">anurag</span>@<span className="text-blue-500">github</span></div>
-                                    <div className="text-gray-500 font-bold">--------------------------------</div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">OS:</span> <span className="text-green-400 font-bold">Research Mode [ON]</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Host:</span> <span>IIT Mandi (Research Intern)</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Status:</span> <span>Final-year, VIT Chennai ('27)</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Kernel:</span> <span className="text-yellow-400">PyTorch 2.x / CUDA</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Editor:</span> <span>VS Code</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Languages:</span> <span className="text-gray-200">Python, C, C++, Java</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">ML Stack:</span> <span className="text-gray-300">PyTorch, TensorFlow, HuggingFace, llama.cpp, OpenCV, LangChain</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Research:</span> <span className="text-gray-300">Medical AI, Generative Models, LLMs, VLMs, SLMs, EdgeAI</span></div>
-                                    <div><span className="text-blue-400 font-semibold inline-block w-24">Focus:</span> <span className="text-gray-300">AI for Social Good</span></div>
+                                    <div className="border-b border-dashed border-gray-800 my-1.5" />
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">OS:</span> <span className="text-green-400 font-bold">Research Mode [ON]</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Host:</span> <span>IIT Mandi (Research Intern)</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Status:</span> <span>Final-year, VIT Chennai ('27)</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Kernel:</span> <span className="text-yellow-400">PyTorch 2.x / CUDA</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Editor:</span> <span>VS Code</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Languages:</span> <span className="text-gray-200">Python, C, C++, Java</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">ML Stack:</span> <span className="text-gray-300">PyTorch, TensorFlow, HuggingFace, llama.cpp, OpenCV, LangChain</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Research:</span> <span className="text-gray-300">Medical AI, Generative Models, LLMs, VLMs, SLMs, EdgeAI</span></div>
+                                    <div><span className="text-blue-400 font-semibold block md:inline-block md:w-24">Focus:</span> <span className="text-gray-300">AI for Social Good</span></div>
                                 </div>
                             </div>
                         );
@@ -178,12 +178,12 @@ const Terminal = () => {
                     }
                     if (line.type === 'contact') {
                         return (
-                            <div key={idx} className="p-4 rounded-xl bg-black/40 border border-white/5 my-2 space-y-1.5 font-Mono">
+                            <div key={idx} className="p-4 rounded-xl bg-black/40 border border-white/5 my-2 space-y-1.5 font-Mono text-[11px] md:text-[12px]">
                                 <div className="text-blue-400 font-bold">// TERMINAL ACTIVE UPLINKS</div>
-                                <div><span className="text-gray-500 w-20 inline-block">Email:</span> <a href="mailto:anuragpradhancb@gmail.com" className="text-green-400 hover:underline">anuragpradhancb@gmail.com</a></div>
-                                <div><span className="text-gray-500 w-20 inline-block">LinkedIn:</span> <a href="https://www.linkedin.com/in/anurag-pradhan-0340bb288" target="_blank" rel="noreferrer" className="text-green-400 hover:underline">in/anurag-pradhan-0340bb288</a></div>
-                                <div><span className="text-gray-500 w-20 inline-block">Scholar:</span> <a href="https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ" target="_blank" rel="noreferrer" className="text-green-400 hover:underline">Google Scholar citations</a></div>
-                                <div><span className="text-gray-500 w-20 inline-block">GitHub:</span> <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="text-green-400 hover:underline">github.com/anurag965</a></div>
+                                <div><span className="text-gray-500 block md:inline-block md:w-20">Email:</span> <a href="mailto:anuragpradhancb@gmail.com" className="text-green-400 hover:underline break-all">anuragpradhancb@gmail.com</a></div>
+                                <div><span className="text-gray-500 block md:inline-block md:w-20">LinkedIn:</span> <a href="https://www.linkedin.com/in/anurag-pradhan-0340bb288" target="_blank" rel="noreferrer" className="text-green-400 hover:underline break-all">in/anurag-pradhan-0340bb288</a></div>
+                                <div><span className="text-gray-500 block md:inline-block md:w-20">Scholar:</span> <a href="https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ" target="_blank" rel="noreferrer" className="text-green-400 hover:underline break-all">Google Scholar citations</a></div>
+                                <div><span className="text-gray-500 block md:inline-block md:w-20">GitHub:</span> <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="text-green-400 hover:underline break-all">github.com/anurag965</a></div>
                             </div>
                         );
                     }
@@ -216,7 +216,7 @@ const Terminal = () => {
 
             {/* Input Prompt Form */}
             <form onSubmit={handleSubmit} className="px-5 py-4 bg-[#070707] border-t border-white/5 flex items-center gap-2">
-                <span className="text-blue-500 font-bold select-none shrink-0">guest@anurag-sys:~$</span>
+                <span className="text-blue-500 font-bold select-none shrink-0"><span className="hidden sm:inline">guest@anurag-sys:</span>~$</span>
                 <input 
                     ref={inputRef}
                     type="text" 

@@ -22,7 +22,7 @@ const Contact = () => {
   }
 
   return (
-    <section id="contact" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+    <section id="contact" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
       {/* Section heading */}
       <div className="mb-8">
@@ -125,10 +125,10 @@ const Contact = () => {
             ['LinkedIn', 'linkedin.com/in/anurag-pradhan-0340bb288',     'https://www.linkedin.com/in/anurag-pradhan-0340bb288'],
             ['Scholar',  'Google Scholar — Anurag Pradhan',              'https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ'],
           ].map(([label, display, href]) => (
-            <div key={label} className="flex items-center gap-5 text-sm font-Mono">
+            <div key={label} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-5 text-sm font-Mono">
               <span className="w-24 text-sm shrink-0" style={{ color: 'var(--text-dim)' }}>{label}:</span>
               <a href={href} target="_blank" rel="noreferrer"
-                className="transition-colors text-sm"
+                className="transition-colors text-sm break-all"
                 style={{ color: 'var(--blue)' }}
                 onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
                 onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}

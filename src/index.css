@@ -67,10 +67,17 @@ html, body {
   background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-mono);
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+@media (min-width: 768px) {
+  html, body {
+    font-size: 18px;
+    line-height: 1.7;
+  }
 }
 
 /* Scrollbar */
@@ -285,6 +292,7 @@ html, body {
 .term-prompt {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   font-size: 0.875rem;
   color: var(--text-dim);

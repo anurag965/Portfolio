@@ -43,7 +43,7 @@ const experiences = [
 ]
 
 const Experience = () => (
-  <section id="experience" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+  <section id="experience" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
     {/* Section heading */}
     <div className="mb-8">
@@ -76,20 +76,22 @@ const Experience = () => (
           className="term-block overflow-hidden"
         >
           {/* File header */}
-          <div className="flex flex-wrap items-center gap-3 px-4 py-2.5 text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
-            <span style={{ color: 'var(--text-dim)' }}>-rwxr-xr-x</span>
-            <span style={{ color: 'var(--text-dim)' }}>anurag</span>
-            <span style={{ color: 'var(--blue)' }}>~/experience/{exp.file}</span>
-            <span className="ml-auto font-bold" style={{ color: 'var(--text-secondary)' }}>{exp.company}</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 px-4 py-2.5 text-xs sm:text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
+            <div className="flex items-center gap-2.5">
+              <span style={{ color: 'var(--text-dim)' }}>-rwxr-xr-x</span>
+              <span style={{ color: 'var(--text-dim)' }}>anurag</span>
+            </div>
+            <span style={{ color: 'var(--blue)' }} className="break-all sm:flex-1">~/experience/{exp.file}</span>
+            <span className="font-bold sm:ml-auto" style={{ color: 'var(--text-secondary)' }}>{exp.company}</span>
           </div>
 
           {/* Content */}
           <div className="px-5 py-4 space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2 text-sm font-Mono">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 text-sm font-Mono">
               <span className="font-bold text-base" style={{ color: 'var(--text-primary)' }}>{exp.role}</span>
-              <div className="flex gap-3 text-xs" style={{ color: 'var(--text-dim)' }}>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs" style={{ color: 'var(--text-dim)' }}>
                 <span>{exp.duration}</span>
-                <span>·</span>
+                <span className="hidden sm:inline">·</span>
                 <span>{exp.location}</span>
               </div>
             </div>

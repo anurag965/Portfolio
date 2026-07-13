@@ -3,15 +3,15 @@ import { motion } from 'framer-motion'
 import user_image from '../assets/user-image.webp'
 
 const skills = [
-  { cat: 'Core Expertise', pct: 92, items: 'VLMs · LLMs/SLMs · EdgeAI · Agentic AI · GenAI · CV · Transformers' },
+  { cat: 'Core Expertise', pct: 92, items: 'VLMs · LLMs/SLMs · EdgeAI · Agentic AI · GenerativeAI · CV · Transformers' },
   { cat: 'Frameworks',     pct: 90, items: 'PyTorch · TensorFlow · Hugging Face · llama.cpp · SmolVLM2 · BEiT · BLIP · OpenCV · LangChain' },
-  { cat: 'Tools & Platforms', pct: 85, items: 'Git · Docker · CUDA · ONNX · W&B · HF Hub · Android/Compose (JNI) · ARM NEON/SVE' },
-  { cat: 'Languages',      pct: 90, items: 'Python · C · C++ · Java · Kotlin' },
+  { cat: 'Tools & Platforms', pct: 85, items: 'Git · Docker · CUDA · ONNX · W&B · HF Hub · Android/Compose (JNI)' },
+  { cat: 'Languages',      pct: 90, items: 'Python · C · C++ · Java' },
   { cat: 'Research Areas', pct: 88, items: 'Generative Modeling · Medical Imaging · Video Processing · VLM Accessibility Evaluation · EdgeAI' },
 ]
 
 const About = () => (
-  <section id="about" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+  <section id="about" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
     {/* Section heading */}
     <div className="mb-8">
@@ -27,6 +27,7 @@ const About = () => (
       <span className="prompt-char">$</span>
       <span className="prompt-cmd">cat ~/.profile &amp;&amp; ls -la ~/skills/</span>
     </div>
+  
 
     {/* Bio & Formal Photo grid */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
@@ -44,10 +45,10 @@ const About = () => (
             Final-year Computer Science student at <span style={{ color: 'var(--blue)' }} className="font-bold">VIT Chennai</span> with research experience in Deep Learning, Medical AI, and Generative Models.
           </p>
           <p className="mt-3">
-            Currently a Summer Research Intern at <span style={{ color: 'var(--blue)' }} className="font-bold">IIT Mandi</span> under Prof. Aditya Nigam, working on MRI-to-synthetic CT reconstruction using GANs, VAEs, and diffusion models.
+            Ex-Summer Research Intern at <span style={{ color: 'var(--blue)' }} className="font-bold">IIT Mandi</span> under Prof. Aditya Nigam, working on MRI-to-synthetic CT reconstruction using GANs, VAEs, and diffusion models.
           </p>
           <p className="mt-3">
-            Skilled in CNNs, Transformers, LLMs, and VLMs using PyTorch. Co-authored a paper published at <span style={{ color: 'var(--purple, #bc8cff)' }} className="font-bold">IJCNLP–AACL 2025</span>.
+            Skilled in CNNs, Transformers, LLMs, VLMs and Generative Models. Co-authored a paper published at <span style={{ color: 'var(--purple, #bc8cff)' }} className="font-bold">IJCNLP–AACL 2025</span>.
           </p>
         </div>
       </motion.div>
@@ -90,11 +91,15 @@ const About = () => (
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: i * 0.06 }}
           viewport={{ once: true }}
-          className="grid grid-cols-12 gap-4 items-center text-sm"
+          className="flex flex-col md:grid md:grid-cols-12 gap-2 md:gap-4 md:items-center text-sm"
         >
-          <span className="col-span-4 md:col-span-3 text-sm font-bold" style={{ color: 'var(--text-secondary)' }}>{s.cat}</span>
+          {/* Category & Percentage: side-by-side on mobile, contents on desktop */}
+          <div className="flex justify-between items-center md:contents">
+            <span className="text-sm font-bold md:col-span-3" style={{ color: 'var(--text-secondary)' }}>{s.cat}</span>
+            <span className="text-sm md:hidden" style={{ color: 'var(--text-dim)' }}>{s.pct}%</span>
+          </div>
 
-          <div className="col-span-3 md:col-span-2">
+          <div className="md:col-span-2">
             <div className="term-progress-bar">
               <motion.div
                 className="term-progress-fill"
@@ -106,9 +111,9 @@ const About = () => (
             </div>
           </div>
 
-          <span className="col-span-1 text-sm text-right md:text-left" style={{ color: 'var(--text-dim)' }}>{s.pct}%</span>
+          <span className="hidden md:inline md:col-span-1 text-sm text-left" style={{ color: 'var(--text-dim)' }}>{s.pct}%</span>
 
-          <span className="col-span-4 md:col-span-6 text-sm leading-relaxed" style={{ color: 'var(--text-dim)' }}>{s.items}</span>
+          <span className="md:col-span-6 text-sm leading-relaxed" style={{ color: 'var(--text-dim)' }}>{s.items}</span>
         </motion.div>
       ))}
     </div>

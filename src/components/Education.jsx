@@ -29,7 +29,7 @@ const education = [
 ]
 
 const Education = () => (
-  <section id="education" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+  <section id="education" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
     {/* Section heading */}
     <div className="mb-8">
@@ -56,13 +56,15 @@ const Education = () => (
       <div className="space-y-4 pl-4">
         {education.map((edu, i) => (
           <div key={edu.id} className="relative pl-4 border-l-2" style={{ borderColor: 'var(--blue-border)' }}>
-            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4">
               <span className="font-bold text-base" style={{ color: 'var(--text-primary)' }}>
                 "{edu.institution}"
               </span>
-              <span className="text-xs" style={{ color: 'var(--text-dim)' }}>
-                {edu.duration} &middot; {edu.location}
-              </span>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs" style={{ color: 'var(--text-dim)' }}>
+                <span>{edu.duration}</span>
+                <span className="hidden sm:inline">&middot;</span>
+                <span>{edu.location}</span>
+              </div>
             </div>
             <div className="text-sm mt-1 pl-2 space-y-0.5">
               <div>

@@ -31,7 +31,7 @@ const Header = () => {
   ]
 
   return (
-    <section id="top" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+    <section id="top" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
       {/* Section heading */}
       <div className="mb-8">
@@ -85,24 +85,24 @@ const Header = () => {
             <span style={{ color: 'var(--text-dim)' }}>@</span>
             <span style={{ color: 'var(--text-secondary)' }}>github</span>
           </div>
-          <div className="text-xs mb-4" style={{ color: 'var(--border)' }}>{'─'.repeat(30)}</div>
+          <div className="border-b border-dashed mb-4" style={{ borderColor: 'var(--border)' }} />
 
           {/* Name */}
-          <div className="flex gap-4 items-baseline mb-3">
-            <span className="text-sm w-24 shrink-0 font-bold" style={{ color: 'var(--text-secondary)' }}>Name:</span>
-            <span className="text-2xl font-black tracking-wider" style={{ color: 'var(--text-primary)' }}>
+          <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-3">
+            <span className="text-sm w-24 shrink-0 font-bold animate-pulse" style={{ color: 'var(--text-secondary)' }}>Name:</span>
+            <span className="text-xl sm:text-2xl font-black tracking-wider" style={{ color: 'var(--text-primary)' }}>
               {name} <span style={{ color: 'var(--blue)' }}>PRADHAN</span>
             </span>
           </div>
 
           {info.map(({ label, value, color }) => (
-            <div key={label} className="flex gap-4 text-sm">
+            <div key={label} className="flex flex-col sm:flex-row gap-0.5 sm:gap-4 text-sm leading-relaxed">
               <span className="text-sm w-24 shrink-0 font-bold" style={{ color: 'var(--text-secondary)' }}>{label}:</span>
               <span style={{ color: color || 'var(--text-secondary)' }}>{value}</span>
             </div>
           ))}
 
-          <div className="text-xs mt-3" style={{ color: 'var(--border)' }}>{'─'.repeat(30)}</div>
+          <div className="border-t border-dashed mt-3" style={{ borderColor: 'var(--border)' }} />
 
           {/* Palette */}
           <div className="flex gap-1.5 py-3">

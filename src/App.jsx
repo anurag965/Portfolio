@@ -34,7 +34,7 @@ const App = () => {
         <Navbar />
         <GutterSidebars />
 
-        <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-12 py-10 font-Mono">
+        <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-12 py-10 font-Mono">
           <Header />
           <About />
           <Experience />
