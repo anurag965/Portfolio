@@ -1,52 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Work from './components/Work'
-import Services from './components/Services'
+import Experience from './components/Experience'
+import Education from './components/Education'
 import About from './components/About'
 import Header from './components/Header'
 import Navbar from './components/Navbar'
+import GutterSidebars from './components/GutterSidebars'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingScreen from './components/LoadingScreen'
 import { AnimatePresence } from 'framer-motion'
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  
+  const [isLoading, setIsLoading] = useState(true)
+
   return (
     <>
-    <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait">
         {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-    </AnimatePresence>
-    
-    <div className={`min-h-screen bg-white dark:bg-[#0a0a0a] relative transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        
-        {/* Advanced Grid & Scanline Background */}
-        <div className="fixed inset-0 bg-grid z-0 opacity-100 pointer-events-none"></div>
-        <div className="ambient-glow"></div>
-        <div className="fixed inset-0 scanline z-[5] opacity-20 pointer-events-none"></div>
-        
-        {/* Edge Decals (HUD Style) */}
-        <div className="fixed top-4 left-4 font-Mono text-[10px] opacity-20 z-50 pointer-events-none hidden md:block uppercase tracking-widest">
-            UPLINK: STABLE // SYS_ID: ANURAG_DL_v3.0
-        </div>
-        <div className="fixed bottom-4 left-4 font-Mono text-[10px] opacity-20 z-50 pointer-events-none hidden md:block uppercase tracking-widest">
-            LOC: 12.83, 80.15 // NODE: CHENNAI_VIT
-        </div>
+      </AnimatePresence>
 
-        <div className="relative z-[10] flex flex-col items-center">
-            <Navbar/>
-            <Header/>
-            <div className="w-full max-w-7xl flex flex-col items-center">
-                <About/>
-                <Services/>
-                <Work/>
-                <Contact/>
-                <Footer/>
-            </div>
-        </div>
+      {/* Subtle CRT overlays */}
+      <div className="crt-scanlines" aria-hidden="true" />
+      <div className="crt-vignette"  aria-hidden="true" />
+      <div className="crt-beam"      aria-hidden="true" />
+      <div className="crt-grid"      aria-hidden="true" />
+
+      <div
+        className={`relative z-10 min-h-screen flex flex-col transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+        style={{ background: 'var(--bg)' }}
+      >
+        <Navbar />
+        <GutterSidebars />
+
+        <main className="flex-1 w-full max-w-5xl mx-auto px-6 md:px-12 py-10 font-Mono">
+          <Header />
+          <About />
+          <Experience />
+          <Education />
+          <Work />
+          <Contact />
+        </main>
+
+        <Footer />
         <ScrollToTop />
-    </div>
+      </div>
     </>
   )
 }

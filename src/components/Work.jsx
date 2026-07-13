@@ -1,165 +1,172 @@
-import React from 'react'
-import send_icon from '../assets/send-icon.png'
-import { motion } from 'framer-motion'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-const ProjectCard = ({ title, tech, bgImage, link, index }) => (
-  <motion.div 
-    whileHover={{ scale: 1.02 }}
-    className="group relative h-[400px] md:h-[450px] overflow-hidden rounded-3xl border border-black/5 dark:border-white/5 shadow-lg bg-gray-100 dark:bg-[#111]"
-  >
-    {/* Techier card header */}
-    <div className="absolute top-0 left-0 right-0 p-6 z-40 flex justify-between items-start pointer-events-none">
-        <span className="font-Mono text-[10px] text-white bg-blue-600 px-3 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-            PROJECT_NODE_0{index + 1}
-        </span>
-        <span className="font-Mono text-[10px] text-white/60 group-hover:text-blue-400 transition-colors uppercase tracking-widest">
-            inference: ready
-        </span>
-    </div>
+const STATUS_COLOR = {
+  ACTIVE:   '#3fb950',
+  DEPLOYED: '#58a6ff',
+  RESEARCH: '#d29922',
+  MERGED:   '#484f58',
+  ACCEPTED: '#3fb950',
+}
 
-    <img 
-        src={bgImage} 
-        alt={title}
-        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 grayscale-[60%] group-hover:grayscale-0 group-hover:scale-110"
-        loading="lazy"
-    />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent opacity-90 transition-opacity" />
-    
-    {/* Corner Brackets for Card */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none p-4">
-        <div className="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-blue-500"></div>
-        <div className="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-blue-500"></div>
-    </div>
+const projects = [
+  { hash: 'a3f2d1c', date: '2026-06', branch: 'main',     status: 'ACTIVE',
+    title: 'DrishtiAI — Android App',
+    desc: 'Architected an offline multimodal Android assistant using SmolVLM2 and llama.cpp for on-device visual question answering. Built optimized JNI/C++ pipelines for real-time image processing and integrated YOLO-World with Depth-Anything for object-aware depth estimation and spatial reasoning.',
+    tags: ['SmolVLM2', 'llama.cpp', 'Kotlin', 'Android', 'JNI', 'YOLO-World', 'Depth-Anything'],
+    link: 'https://github.com/anurag965/DrishtiAI-preview' },
+  { hash: 'b8e4a2f', date: '2026-05', branch: 'main',     status: 'DEPLOYED',
+    title: 'CMCA-ActionNet – Spatio-Temporal Action Detection',
+    desc: 'Engineered a multimodal human action recognition system achieving 84% accuracy on the JHMDB dataset. Developed a Cross-Modal Causal Attention (CMCA) module to fuse RGB, optical flow, and MediaPipe pose landmarks. Incorporated bidirectional temporal attention and an uncertainty-aware prediction head for robust action recognition and confidence estimation.',
+    tags: ['PyTorch', 'CMCA Attention', 'MediaPipe', 'Action Recognition', 'Optical Flow'],
+    link: 'https://github.com/anurag965/SentinelVision' },
+  { hash: 'c1d7f3b', date: '2026-03', branch: 'main',     status: 'DEPLOYED',
+    title: 'Brain Tumor Segmentation',
+    desc: 'Built a BEiT-transformer segmentation pipeline with skip connections and attention-driven decoding. Trained with Albumentations and CE–Dice hybrid loss for stable convergence.',
+    tags: ['BEiT', 'ViT', 'Medical AI', 'Albumentations', 'CE-Dice Loss'],
+    link: 'https://github.com/anurag965/Brain-Tumor-Segmentation' },
+  { hash: 'd9c2e8a', date: '2025-11', branch: 'main',     status: 'DEPLOYED',
+    title: 'JanaSathi: Odia E-Governance Chatbot',
+    desc: 'Designed a bilingual RAG-based chatbot for Odisha government schemes using OpenRouter LLMs and MiniLM embeddings. Integrated Odia translation with Cohere Command-R+. Achieved 2nd place in the AMD-sponsored OdiaGenAI Hackathon 2025.',
+    tags: ['LangChain', 'RAG', 'ChromaDB', 'OpenRouter', 'Command-R+'],
+    link: 'https://github.com/anurag965/OdiaGenAI_JanaSathi' },
+]
 
-    <div className="absolute inset-0 flex flex-col justify-end p-8 z-30">
-        <h3 className="text-white font-Outfit font-black text-2xl mb-2 tracking-tight leading-none uppercase text-left group-hover:text-blue-400 transition-colors drop-shadow-md">{title}</h3>
-        <p className="text-gray-200 font-Mono text-[10px] font-bold tracking-[0.2em] mb-6 uppercase leading-relaxed text-left max-w-[90%] drop-shadow-sm opacity-90">
-            // {tech}
-        </p>
-        
-        <a 
-            href={link} 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="w-max flex items-center gap-3 text-white font-Mono text-xs font-black bg-blue-600 px-8 py-3 rounded-full hover:bg-blue-500 hover:shadow-xl hover:shadow-blue-500/20 transition-all uppercase tracking-widest"
-        >
-            RUN_SOURCE() <img src={send_icon} alt="" className="w-3 invert"/>
-        </a>
-    </div>
-  </motion.div>
-);
+const publication = {
+  title: 'Towards Blind and Low-Vision Accessibility of Lightweight VLMs and Custom LLM-Evals',
+  venue: 'IJCNLP–AACL 2025, Mumbai, India',
+  authors: 'S. S. Baghel, Y. P. S. Rathore, A. Pradhan',
+  status: 'ACCEPTED',
+}
 
 const Work = () => {
-  const projects = [
-    {
-        title: "DrishtiAI — Android App",
-        tech: "VLMs (SmolVLM2), Quantization, llama.cpp, Kotlin",
-        bgImage: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=800",
-        link: "https://github.com/anurag965"
-    },
-    {
-        title: "CMCA ActionNet – Spatio  Temporal  Multimodal  Action  Detection",
-        tech: "PyTorch, Causal Attention, JHMDB Dataset, Optical Flow, MediaPipe",
-        bgImage: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=800",
-        link: "https://github.com/anurag965"
-    },
-    {
-        title: "Brain Tumor Segmentation",
-        tech: "Python, Vision Transformers, BEiT, Segmentation",
-        bgImage: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&q=80&w=800",
-        link: "https://github.com/anurag965/Brain-Tumor-Segmentation"
-    },
-    {
-        title: "JanaSathi: Odia E-Gov Chatbot",
-        tech: "Python, Transformers, LangChain, RAG",
-        bgImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
-        link: "https://github.com/anurag965/OdiaGenAI_Hackathon"
-    }
-  ];
-
-  const publication = {
-    title: "Towards Blind and Low-Vision Accessibility of Lightweight VLMs and Custom LLM-Evals",
-    authors: "S. S. Baghel, Y. P. S. Rathore, A. Pradhan",
-    conference: "IJCNLP–AACL 2025, Mumbai, India",
-    status: "Accepted at IJCNLP–AACL 2025"
-  };
+  const [expanded, setExpanded] = useState(null)
 
   return (
-    <div id="work" className="w-full px-6 md:px-[12%] py-24 scroll-mt-20 flex flex-col items-center relative">
-        {/* Background Decal */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none hidden xl:block">
-            <div className="font-Mono text-[100px] font-black leading-none text-gray-400 rotate-90 uppercase tracking-tighter">
-                RESEARCH
-            </div>
+    <section id="work" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+
+      {/* Section heading */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-1">
+          <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>05</span>
+          <h2 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Work</h2>
         </div>
+        <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>Research publications &amp; project commits</p>
+      </div>
 
-        {/* Publication Section */}
-        <div className="w-full max-w-5xl mb-32 relative z-10">
-            <div className="flex flex-col items-center mb-16">
-                <span className="text-blue-600 font-Mono font-black uppercase tracking-[0.5em] text-[10px] mb-4">&lt; PEER_REVIEWED /&gt;</span>
-                <h2 className="text-3xl md:text-5xl font-black text-center text-gray-900 dark:text-gray-100 uppercase tracking-tighter">Publications</h2>
-            </div>
+      {/* ── PUBLICATION ── */}
+      <div className="term-prompt">
+        <span className="prompt-char">$</span>
+        <span className="prompt-cmd">cat publications/peer_reviewed.bib</span>
+      </div>
 
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="bg-gray-50 dark:bg-[#111] border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-3xl relative overflow-hidden group hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500"
-            >
-                {/* Refined Tech Corner Brackets */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-600/50"></div>
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-blue-600/50"></div>
-
-                <div className="absolute top-0 right-0 bg-blue-600 text-white font-Mono font-bold text-[10px] px-6 py-2 uppercase tracking-widest">
-                    PUBLISHED_ACL
-                </div>
-                
-                <div className="flex flex-col gap-6">
-                    <div className="font-Mono text-[10px] text-blue-500 font-bold tracking-widest uppercase opacity-60">
-                        // 01. model_eval_accessibility
-                    </div>
-                    <h3 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 uppercase leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-left max-w-3xl">
-                        {publication.title}
-                    </h3>
-                    <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-                        <p className="text-base text-gray-500 dark:text-gray-400 font-Outfit text-left italic">
-                            {publication.authors}
-                        </p>
-                        <div className="h-[1px] w-12 bg-blue-500/20 hidden md:block"></div>
-                        <p className="font-Mono font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wider text-[10px] leading-relaxed text-left border border-blue-500/20 px-3 py-1 rounded-md">
-                            {publication.conference}
-                        </p>
-                    </div>
-                </div>
-            </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        className="term-block mb-12 overflow-hidden"
+      >
+        <div className="flex items-center gap-3 px-4 py-2.5 text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
+          <span style={{ color: 'var(--purple, #bc8cff)' }}>@article</span>
+          <span style={{ color: 'var(--text-dim)' }}>{`{anurag_aacl2025}`}</span>
+          <span className="ml-auto text-sm font-bold" style={{ color: STATUS_COLOR[publication.status] }}>
+            [{publication.status}]
+          </span>
         </div>
-
-        {/* Projects Section */}
-        <div className="w-full max-w-6xl relative z-10">
-            <div className="flex flex-col items-center mb-16">
-                <span className="text-blue-600 font-Mono font-black uppercase tracking-[0.5em] text-[10px] mb-4">&lt; SYSTEM_INFERENCE /&gt;</span>
-                <h2 className="text-4xl md:text-6xl font-black text-center text-gray-900 dark:text-gray-100 uppercase tracking-tighter">Selected Work</h2>
+        <div className="px-5 py-5 font-Mono space-y-2 text-base">
+          {[
+            ['title',  publication.title,   'var(--text-primary)'],
+            ['venue',  publication.venue,   'var(--text-secondary)'],
+            ['author', publication.authors, 'var(--text-secondary)'],
+            ['year',   '2025',              'var(--blue)'],
+          ].map(([k, v, c]) => (
+            <div key={k} className="flex gap-3">
+              <span className="w-16 shrink-0 text-sm" style={{ color: 'var(--text-dim)' }}>{k}</span>
+              <span className="text-sm">=</span>
+              <span className="text-sm leading-relaxed" style={{ color: c }}>"{v}"</span>
             </div>
+          ))}
+        </div>
+      </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {projects.map((proj, index) => (
-                    <ProjectCard key={index} {...proj} index={index} />
-                ))}
-            </div>
+      {/* ── PROJECTS ── */}
+      <div className="term-prompt">
+        <span className="prompt-char">$</span>
+        <span className="prompt-cmd">git log --oneline --graph --all ~/projects</span>
+      </div>
 
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="mt-24 text-center"
+      <div className="space-y-1">
+        {projects.map((p, i) => (
+          <motion.div
+            key={p.hash}
+            initial={{ opacity: 0, x: -6 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.06 }}
+            viewport={{ once: true }}
+          >
+            {/* Log line */}
+            <button
+              onClick={() => setExpanded(expanded === i ? null : i)}
+              className="w-full text-left flex items-center gap-3 px-3 py-2.5 rounded text-sm font-Mono transition-colors group"
+              style={{ background: expanded === i ? 'var(--bg-surface)' : 'transparent' }}
+              onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-surface)'}
+              onMouseLeave={e => e.currentTarget.style.background = expanded === i ? 'var(--bg-surface)' : 'transparent'}
             >
-                <a 
-                    href="https://github.com/anurag965?tab=repositories" 
-                    className="inline-block px-12 py-4 bg-transparent border-2 border-gray-900 dark:border-gray-100 text-gray-900 dark:text-gray-100 font-Mono font-black uppercase rounded-full hover:bg-gray-900 hover:text-white dark:hover:bg-gray-100 dark:hover:text-gray-900 transition-all duration-300 tracking-widest text-xs shadow-lg"
+              <span style={{ color: 'var(--text-dim)' }}>*</span>
+              <span style={{ color: '#e3b341' }}>{p.hash}</span>
+              <span style={{ color: 'var(--text-dim)' }}>({p.date})</span>
+              <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>
+                {p.branch}
+              </span>
+              <span className="flex-1 font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{p.title}</span>
+              <span className="shrink-0 text-sm font-bold" style={{ color: STATUS_COLOR[p.status] }}>{p.status}</span>
+              <span style={{ color: 'var(--text-dim)' }}>{expanded === i ? '▼' : '▶'}</span>
+            </button>
+
+            {/* Expanded */}
+            <AnimatePresence>
+              {expanded === i && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="ml-5 border-l pl-5 py-4 space-y-3"
+                  style={{ borderColor: 'var(--border-dim)' }}
                 >
-                    BROWSE_ALL_NODES()
-                </a>
-            </motion.div>
-        </div>
-    </div>
+                  <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{p.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {p.tags.map(t => <span key={t} className="term-badge">{t}</span>)}
+                  </div>
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-Mono transition-colors"
+                    style={{ color: 'var(--blue)' }}
+                    onClick={e => e.stopPropagation()}
+                  >
+                    ↗ {p.link.replace('https://', '')}
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="mt-8 text-sm font-Mono" style={{ color: 'var(--text-dim)' }}>
+        <span style={{ color: 'var(--blue)' }}>❯ </span>
+        <a href="https://github.com/anurag965?tab=repositories" target="_blank" rel="noreferrer"
+          className="transition-colors" style={{ color: 'var(--text-dim)' }}
+          onMouseEnter={e => e.currentTarget.style.color = 'var(--blue)'}
+          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-dim)'}
+        >
+          open https://github.com/anurag965 --all-repos
+        </a>
+        <span className="cursor-blink" />
+      </div>
+    </section>
   )
 }
 

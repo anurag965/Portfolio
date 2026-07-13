@@ -1,39 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 const ScrollToTop = () => {
-    const [isVisible, setIsVisible] = useState(false);
+  const [visible, setVisible] = useState(false)
 
-    const toggleVisibility = () => {
-        if (window.pageYOffset > 300) {
-            setIsVisible(true);
-        } else {
-            setIsVisible(false);
-        }
-    };
+  useEffect(() => {
+    const handler = () => setVisible(window.scrollY > 400)
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
+  if (!visible) return null
 
-    useEffect(() => {
-        window.addEventListener('scroll', toggleVisibility);
-        return () => {
-            window.removeEventListener('scroll', toggleVisibility);
-        };
-    }, []);
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-8 right-6 z-50 term-btn text-[10px] rounded-sm px-3 py-2"
+      aria-label="Scroll to top"
+    >
+      ↑ top
+    </button>
+  )
+}
 
-    return (
-        <div className="fixed bottom-5 right-5">
-            {isVisible && 
-                <button onClick={scrollToTop} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                    ^
-                </button>
-            }
-        </div>
-    );
-};
-
-export default ScrollToTop;
+export default ScrollToTop

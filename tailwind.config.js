@@ -11,7 +11,8 @@ export default {
     },
     fontFamily:{
         Outfit: ["Outfit", "sans-serif"],
-        Ovo: ["Ovo", "serif"]
+        Ovo: ["Ovo", "serif"],
+        Mono: ["Fira Code", "monospace"]
     },
     animation:{
         spin_slow: 'spin 6s linear infinite'

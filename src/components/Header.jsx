@@ -2,154 +2,132 @@ import React, { useState, useEffect } from 'react'
 import profile_img from '../assets/profile-img.webp'
 import { motion } from 'framer-motion'
 
+const SCRAMBLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*'
+const TARGET = 'ANURAG'
+
 const Header = () => {
-  const [scrambledName, setScrambledName] = useState("*******");
-  const targetName = "ANURAG";
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+  const [name, setName] = useState('######')
 
   useEffect(() => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setScrambledName(prev => 
-        targetName.split("")
-          .map((letter, index) => {
-            if(index < iteration) return targetName[index];
-            return chars[Math.floor(Math.random() * chars.length)]
-          })
-          .join("")
-      );
-      
-      if(iteration >= targetName.length) clearInterval(interval);
-      iteration += 1/10; // Slowed down from 1/3
-    }, 50); // Increased interval from 40ms
-    
-    return () => clearInterval(interval);
-  }, []);
+    let iter = 0
+    const id = setInterval(() => {
+      setName(TARGET.split('').map((c, i) =>
+        i < iter ? TARGET[i] : SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)]
+      ).join(''))
+      if (iter >= TARGET.length) clearInterval(id)
+      iter += 0.12
+    }, 45)
+    return () => clearInterval(id)
+  }, [])
+
+  const info = [
+    { label: 'Role', value: 'Deep Learning & CV Researcher', color: 'var(--blue)' },
+    { label: 'Host', value: 'IIT Mandi — Research Intern' },
+    { label: 'Node', value: "VIT Chennai — B.Tech '27" },
+    { label: 'Kernel', value: 'PyTorch 2.x / CUDA 12.1', color: 'var(--yellow)' },
+    { label: 'Stack', value: 'PyTorch · llama.cpp · SmolVLM2 · LangChain' },
+    { label: 'Research', value: 'Generative Modeling · Medical Imaging · VLM Accessibility · EdgeAI' },
+    { label: 'Focus', value: 'AI for Social Good', color: 'var(--blue)' },
+  ]
 
   return (
-    <div id="top" className="w-full min-h-screen px-6 py-20 flex flex-col items-center justify-center relative overflow-hidden">
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2 }} // Slower container entrance
-            className="w-full max-w-5xl flex flex-col items-center text-center gap-6 md:gap-8 relative z-10"
-        >
-            <div className="relative group p-4 inline-block">
-                {/* HUD-style brackets for profile image */}
-                <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-blue-600 opacity-50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
-                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-blue-600 opacity-50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
-                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-blue-600 opacity-50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
-                <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-blue-600 opacity-50 group-hover:w-12 group-hover:h-12 transition-all duration-500"></div>
+    <section id="top" className="py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
 
-                <motion.img 
-                    src={profile_img} 
-                    alt="Anurag Pradhan" 
-                    fetchpriority="high"
-                    loading="eager"
-                    initial={{ filter: "brightness(0) invert(1)", opacity: 0 }}
-                    animate={{ filter: "brightness(1) invert(0)", opacity: 1 }}
-                    transition={{ duration: 1.5, delay: 0.8 }} // Slower reveal
-                    className="relative z-10 rounded-2xl w-36 md:w-40 grayscale group-hover:grayscale-0 transition-all duration-700 shadow-2xl mx-auto"
-                />
-                
-                <div className="absolute -bottom-2 -right-2 w-5 h-5 bg-green-500 rounded-full border-4 border-white dark:border-[#0a0a0a] animate-pulse z-20 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-            </div>
-            
-            <div className="flex flex-col gap-4">
-                <motion.h3 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                    className="text-blue-600 dark:text-blue-600 font-Mono font-black tracking-[0.3em] text-xs uppercase mb-1"
-                >
-                    &lt; DL_ENGINEER_INIT /&gt;
-                </motion.h3>
-                
-                <h1 className="text-4xl sm:text-5xl md:text-7xl font-black font-Outfit tracking-tighter leading-none text-gray-900 dark:text-gray-100 uppercase">
-                    <div className="flex items-center justify-center gap-3">
-                        <motion.span 
-                            initial={{ x: 40, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 1.2, delay: 1 }}
-                            className="text-blue-600"
-                        >[</motion.span>
-                        
-                        <span className="inline-block min-w-[1.2em]">
-                            {scrambledName}
-                        </span>
-
-                        <motion.span 
-                            initial={{ x: -40, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 1.2, delay: 1 }}
-                            className="text-blue-600"
-                        >]</motion.span>
-                    </div>
-                    
-                    <motion.span
-                        initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
-                        animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                        transition={{ duration: 1.5, delay: 2.2 }} // Much later reveal
-                        className="text-blue-600 block mt-2"
-                    >
-                        Pradhan
-                    </motion.span>
-                </h1>
-                
-                <div className="max-w-2xl mx-auto flex flex-col gap-4 px-2 sm:px-0">
-                    <motion.p 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 2.8 }}
-                        className="font-Outfit text-lg md:text-xl text-gray-600 dark:text-gray-400 leading-relaxed font-medium italic"
-                    >
-                        "Bridging neural architectures with real-world impact."
-                    </motion.p>
-                    <div className="w-20 md:w-24 h-[1px] bg-blue-600/30 mx-auto"></div>
-                    <motion.p 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 3.2 }}
-                        className="font-Outfit text-base md:text-base text-gray-700 dark:text-gray-300"
-                    >
-                        Skilled in <span className="text-blue-600 dark:text-blue-600 font-bold font-Mono">CNNs</span>, <span className="text-blue-600 dark:text-blue-600 font-bold font-Mono">ViTs</span>, and <span className="text-blue-600 dark:text-blue-600 font-bold font-Mono">LLMs</span> with on-device optimization expertise.
-                    </motion.p>
-                </div>
-            </div>
-
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 3.8 }}
-                className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mt-6 w-full sm:w-auto px-4 sm:px-0"
-            >
-                <a 
-                    href="#contact"
-                    className="w-full sm:w-auto group relative px-12 py-5 font-Mono font-black uppercase overflow-hidden border-2 border-black dark:border-white transition-all duration-300 text-center text-sm"
-                >
-                    <span className="absolute inset-0 bg-black dark:bg-white scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></span>
-                    <span className="relative group-hover:text-white dark:group-hover:text-black">EXEC_CONTACT()</span>
-                </a>
-
-                <a 
-                    href={`${import.meta.env.BASE_URL}Anurag_Pradhan.pdf`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="group px-6 py-2 flex items-center gap-4 font-Mono text-xs font-bold tracking-widest text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-all cursor-pointer uppercase" 
-                >
-                    <span className="w-10 h-[1px] bg-gray-300 dark:bg-gray-700 group-hover:w-16 group-hover:bg-blue-600 transition-all"></span>
-                    FETCH_RESUME.pdf
-                </a>
-            </motion.div>
-        </motion.div>
-
-        {/* Vertical HUD Labels */}
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-24 opacity-10 pointer-events-none">
-            <span className="font-Mono text-[10px] uppercase tracking-[0.5em] -rotate-90">PROCESSING_DATA...</span>
-            <span className="font-Mono text-[10px] uppercase tracking-[0.5em] -rotate-90">RESEARCH_ACTIVE</span>
-            <span className="font-Mono text-[10px] uppercase tracking-[0.5em] -rotate-90">NODE_VIT_CHENNAI</span>
+      {/* Section heading */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-1">
+          <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>01</span>
+          <h1 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Profile</h1>
         </div>
-    </div>
+        <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>System identity &amp; researcher overview</p>
+      </div>
+
+      {/* Prompt */}
+      <div className="term-prompt mb-10">
+        <span className="prompt-char">$</span>
+        <span className="prompt-cmd">neofetch --config ~/.anurag_profile</span>
+        <span className="cursor-blink" />
+      </div>
+
+      {/* Neofetch layout */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="flex flex-col md:flex-row gap-12 items-start"
+      >
+        {/* Profile photo */}
+        <div className="relative shrink-0">
+          <div className="absolute -inset-[1px] rounded-lg" style={{ background: 'var(--border-dim)' }} />
+          <div className="relative p-px rounded-lg overflow-hidden">
+            <img
+              src={profile_img}
+              alt="Anurag Pradhan"
+              fetchpriority="high"
+              loading="eager"
+              className="w-44 md:w-52 h-44 md:h-52 object-cover rounded-lg"
+              style={{ filter: 'grayscale(20%) brightness(0.85) contrast(1.1)' }}
+            />
+          </div>
+          {/* Status dot */}
+          <div className="absolute -bottom-1 -right-1 flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-Mono"
+            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', color: 'var(--green, #3fb950)' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green, #3fb950)' }} />
+            online
+          </div>
+        </div>
+
+        {/* Info panel */}
+        <div className="flex-1 space-y-1 font-Mono">
+          {/* Header */}
+          <div className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>
+            <span style={{ color: 'var(--blue)' }}>anurag</span>
+            <span style={{ color: 'var(--text-dim)' }}>@</span>
+            <span style={{ color: 'var(--text-secondary)' }}>github</span>
+          </div>
+          <div className="text-xs mb-4" style={{ color: 'var(--border)' }}>{'─'.repeat(30)}</div>
+
+          {/* Name */}
+          <div className="flex gap-4 items-baseline mb-3">
+            <span className="text-sm w-24 shrink-0 font-bold" style={{ color: 'var(--text-secondary)' }}>Name:</span>
+            <span className="text-2xl font-black tracking-wider" style={{ color: 'var(--text-primary)' }}>
+              {name} <span style={{ color: 'var(--blue)' }}>PRADHAN</span>
+            </span>
+          </div>
+
+          {info.map(({ label, value, color }) => (
+            <div key={label} className="flex gap-4 text-sm">
+              <span className="text-sm w-24 shrink-0 font-bold" style={{ color: 'var(--text-secondary)' }}>{label}:</span>
+              <span style={{ color: color || 'var(--text-secondary)' }}>{value}</span>
+            </div>
+          ))}
+
+          <div className="text-xs mt-3" style={{ color: 'var(--border)' }}>{'─'.repeat(30)}</div>
+
+          {/* Palette */}
+          <div className="flex gap-1.5 py-3">
+            {['#0d1117', '#161b22', '#21262d', '#30363d', '#58a6ff', '#79c0ff', '#e6edf3', '#ffffff'].map((c, i) => (
+              <span key={i} className="w-4 h-4 rounded-sm border" style={{ background: c, borderColor: 'var(--border-dim)' }} />
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-3 pt-4">
+            <a href="#contact" className="term-btn">
+              ❯&nbsp;./exec_contact.sh
+            </a>
+            <a
+              href={`${import.meta.env.BASE_URL}Anurag_Pradhan.pdf`}
+              target="_blank"
+              rel="noreferrer"
+              className="term-btn term-btn-ghost"
+            >
+              ❯&nbsp;wget resume.pdf
+            </a>
+          </div>
+        </div>
+      </motion.div>
+    </section>
   )
 }
 

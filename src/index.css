@@ -2,105 +2,323 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS — Modern Dark IDE
+   ══════════════════════════════════════════════ */
 :root {
-  --particle-color: #000000;
-  --science-blue: #2563eb;
-  --tech-glow: rgba(37, 99, 235, 0.05);
+  --bg:          #0d1117;   /* GitHub dark base */
+  --bg-surface:  #161b22;   /* slightly lighter panel */
+  --bg-hover:    #1c2128;
+  --border:      #30363d;
+  --border-dim:  #21262d;
+
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-dim:       #484f58;
+
+  --blue:         #58a6ff;  /* GitHub blue */
+  --blue-dim:     #1f6feb;
+  --blue-subtle:  rgba(88,166,255,0.12);
+  --blue-border:  rgba(88,166,255,0.25);
+
+  --green:        #3fb950;  /* success/online */
+  --yellow:       #d29922;
+  --red:          #f85149;
+  --purple:       #bc8cff;
+
+  --font-mono: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
 }
 
-.dark {
-  --particle-color: #ffffff;
-  --science-blue: #3b82f6;
-  --tech-glow: rgba(59, 130, 246, 0.1);
+/* Light Theme Variables */
+.light {
+  --bg:          #f6f8fa;   /* GitHub light base */
+  --bg-surface:  #ffffff;   /* white panel */
+  --bg-hover:    #eaeef2;
+  --border:      #d0d7de;   /* GitHub light border */
+  --border-dim:  #d8dee4;
+
+  --text-primary:   #24292f;   /* dark gray/black text */
+  --text-secondary: #57606a;
+  --text-dim:       #8c959f;
+
+  --blue:         #0969da;  /* GitHub light blue */
+  --blue-dim:     #0550ae;
+  --blue-subtle:  rgba(9,105,218,0.08);
+  --blue-border:  rgba(9,105,218,0.2);
+
+  --green:        #1a7f37;
+  --yellow:       #9a6700;
+  --red:          #cf222e;
+  --purple:       #8250df;
 }
 
-.bg-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+/* Disable CRT overlay effects in light mode for crisp contrast */
+.light .crt-scanlines { display: none; }
+.light .crt-vignette { display: none; }
+.light .crt-beam { display: none; }
+.light .crt-grid {
+  background-image: radial-gradient(circle, rgba(9,105,218,0.08) 1px, transparent 1px);
 }
 
-.dark .bg-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+/* ══════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════ */
+html, body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-.ambient-glow {
-  @apply fixed inset-0 pointer-events-none z-0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
-}
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
 
-.dark .ambient-glow {
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
-}
+/* ══════════════════════════════════════════════
+   SUBTLE CRT LAYER  (barely visible, tasteful)
+   ══════════════════════════════════════════════ */
 
-.scanline {
-  background: linear-gradient(
-    to bottom,
-    rgba(18, 16, 16, 0) 50%,
-    rgba(0, 0, 0, 0.02) 50%
-  );
-  background-size: 100% 4px;
+/* Very faint scanlines — just a texture hint */
+.crt-scanlines {
+  position: fixed;
+  inset: 0;
   pointer-events: none;
-}
-
-.dark .scanline {
-  background: linear-gradient(
+  z-index: 9998;
+  background: repeating-linear-gradient(
     to bottom,
-    rgba(18, 16, 16, 0) 50%,
-    rgba(255, 255, 255, 0.02) 50%
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.06) 3px,
+    rgba(0,0,0,0.06) 4px
   );
 }
 
-@keyframes scan-v {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
+/* Soft vignette — darker at corners */
+.crt-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9996;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 60%,
+    rgba(0,0,0,0.35) 100%
+  );
 }
 
-.tech-border {
-  @apply relative border border-black/10 dark:border-white/10;
+/* Very subtle dot-grid background */
+.crt-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(circle, rgba(88,166,255,0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-.tech-border::before, .tech-border::after {
-  content: "";
-  @apply absolute w-2 h-2 border-blue-500;
+/* Blue ambient glow — top-left and bottom-right corners */
+.crt-beam {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(88,166,255,0.04) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(88,166,255,0.03) 0%, transparent 40%);
 }
 
-.tech-border::before {
-  @apply top-0 left-0 border-t-2 border-l-2;
+/* Noise layer — very subtle */
+.crt-noise {
+  display: none; /* disabled — keeps it clean */
 }
 
-.tech-border::after {
-  @apply bottom-0 right-0 border-b-2 border-r-2;
+/* ══════════════════════════════════════════════
+   TERMINAL CHROME
+   ══════════════════════════════════════════════ */
+
+.term-titlebar {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-dim);
 }
 
-body {
-  @apply bg-white dark:bg-[#0a0a0a] text-black dark:text-white font-Outfit antialiased;
+.term-tab-active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--blue);
+  background: rgba(88,166,255,0.06);
 }
 
-.glass-card {
-  @apply bg-white/5 backdrop-blur-md border border-white/10 shadow-sm;
+.term-tab-inactive {
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
 }
 
-/* Custom scrollbar for a professional look */
-::-webkit-scrollbar {
+.term-tab-inactive:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+/* ══════════════════════════════════════════════
+   TEXT UTILITIES
+   ══════════════════════════════════════════════ */
+
+.phosphor-bright { color: var(--text-primary); }
+.phosphor        { color: var(--blue); }
+.phosphor-dim    { color: var(--text-secondary); }
+.phosphor-blue   { color: var(--blue); }
+.phosphor-yellow { color: var(--yellow); }
+.phosphor-red    { color: var(--red); }
+.phosphor-green  { color: var(--green); }
+.phosphor-purple { color: var(--purple); }
+
+/* Blinking cursor */
+.cursor-blink {
+  display: inline-block;
   width: 8px;
+  height: 1em;
+  background: var(--blue);
+  opacity: 0.8;
+  animation: blink 1.2s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 0.8; }
+  50%       { opacity: 0; }
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-transparent;
+/* ══════════════════════════════════════════════
+   COMPONENTS
+   ══════════════════════════════════════════════ */
+
+/* Generic block container */
+.term-block {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+.term-block:hover {
+  border-color: var(--border);
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-800 rounded-full;
+/* Buttons */
+.term-btn {
+  background: var(--blue-subtle);
+  border: 1px solid var(--blue-border);
+  color: var(--blue);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 1.4rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+.term-btn:hover {
+  background: rgba(88,166,255,0.2);
+  border-color: rgba(88,166,255,0.5);
+  box-shadow: 0 0 0 3px rgba(88,166,255,0.1);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-700;
+.term-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+.term-btn-ghost:hover {
+  background: var(--bg-hover);
+  border-color: var(--border);
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+/* Input */
+.term-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  caret-color: var(--blue);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  width: 100%;
+}
+.term-input::placeholder { color: var(--text-dim); }
+
+/* Progress bar */
+.term-progress-bar {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-dim);
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.term-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-dim), var(--blue));
+  border-radius: 2px;
+  transition: width 0.6s ease;
+}
+
+/* Badge / tag */
+.term-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  background: var(--bg-hover);
+}
+
+/* Section prompt line */
+.term-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+.term-prompt .prompt-char { color: var(--blue); font-weight: bold; }
+.term-prompt .prompt-cmd  { color: var(--text-secondary); }
+
+/* Section heading strip */
+.term-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+.term-section-heading::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-dim);
+}
+
+/* Kept for backward compat */
+.glass-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+}
+.glass-pill {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-dim);
+  border-radius: 20px;
 }
