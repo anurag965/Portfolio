@@ -52,21 +52,32 @@ const LoadingScreen = ({ onComplete }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.4 }}
       className="fixed inset-0 z-[9999] flex flex-col font-Mono text-xs overflow-hidden"
-      style={{ background: '#0d1117' }}
+      style={{ 
+        background: 'rgba(8, 10, 15, 0.65)', 
+        backdropFilter: 'blur(30px)', 
+        WebkitBackdropFilter: 'blur(30px)' 
+      }}
     >
+      {/* Apple Glass Background Blobs */}
+      <div className="glass-bg-blobs" aria-hidden="true" style={{ opacity: 0.5 }}>
+        <div className="glass-blob glass-blob-1" />
+        <div className="glass-blob glass-blob-2" />
+        <div className="glass-blob glass-blob-3" />
+      </div>
+
       <div className="crt-scanlines" aria-hidden="true" />
       <div className="crt-vignette"  aria-hidden="true" />
 
-      <div className="flex-1 overflow-hidden px-8 py-12 flex flex-col justify-end">
+      <div className="flex-1 overflow-hidden px-8 py-12 flex flex-col justify-end relative z-10">
         <div className="space-y-0.5">
           {lines.map((line, i) => (
             <div key={i} style={{
-              color: line.startsWith('[') ? '#484f58' :
+              color: line.startsWith('[') ? 'rgba(255,255,255,0.45)' :
                      line.includes('GRANTED') ? '#58a6ff' :
                      line.startsWith('$') ? '#58a6ff' :
-                     line.startsWith('anurag-sys') ? '#8b949e' :
+                     line.startsWith('anurag-sys') ? '#e6edf3' :
                      line.startsWith('Last') ? '#8b949e' :
-                     '#30363d'
+                     'rgba(255,255,255,0.25)'
             }}>
               {line || '\u00A0'}
             </div>
@@ -74,13 +85,13 @@ const LoadingScreen = ({ onComplete }) => {
         </div>
       </div>
 
-      <div className="px-8 pb-12 space-y-2">
-        <div className="flex justify-between text-xs" style={{ color: '#484f58' }}>
+      <div className="px-8 pb-12 space-y-2 relative z-10">
+        <div className="flex justify-between text-xs font-bold" style={{ color: 'rgba(255,255,255,0.45)' }}>
           <span>Booting anurag-sys...</span>
           <span>{progress}%</span>
         </div>
-        <div className="term-progress-bar">
-          <div className="term-progress-fill" style={{ width: `${progress}%` }} />
+        <div className="term-progress-bar" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div className="term-progress-fill" style={{ width: `${progress}%`, background: 'linear-gradient(90deg, var(--blue-dim), var(--blue))' }} />
         </div>
       </div>
     </motion.div>
