@@ -70,6 +70,7 @@ html, body {
   font-size: 14px;
   line-height: 1.6;
   overflow-x: hidden;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -207,36 +208,38 @@ html, body {
 /* Generic block container - Apple Glass Display style */
 .term-block {
   background: rgba(15, 20, 30, 0.45) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 .term-block:hover {
   background: rgba(15, 20, 30, 0.55) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.35),
-    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
 }
 
 .light .term-block {
-  background: rgba(255, 255, 255, 0.55) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.05),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85) !important;
 }
 .light .term-block:hover {
-  background: rgba(255, 255, 255, 0.65) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  background: rgba(255, 255, 255, 0.52) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.1),
-    inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    0 20px 45px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
 }
 
 /* Buttons */
@@ -371,7 +374,7 @@ html, body {
   position: absolute;
   border-radius: 50%;
   filter: blur(120px);
-  opacity: 0.16;
+  opacity: 0.38;
   mix-blend-mode: screen;
   animation: floatBlobs 25s ease-in-out infinite alternate;
 }
@@ -416,37 +419,58 @@ html, body {
 
 .apple-glass {
   background: rgba(15, 20, 30, 0.45) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+    0 10px 30px rgba(0, 0, 0, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 .apple-glass:hover {
   background: rgba(15, 20, 30, 0.55) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.35),
-    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Force dark glass for Terminal so syntax coloring remains legible in both themes */
+.apple-glass-dark {
+  background: rgba(10, 12, 16, 0.72) !important;
+  backdrop-filter: blur(32px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 
+    0 15px 45px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+.apple-glass-dark:hover {
+  background: rgba(10, 12, 16, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
 }
 
 .light .glass-blob {
-  opacity: 0.08;
-  mix-blend-mode: multiply;
+  opacity: 0.38;
+  mix-blend-mode: normal;
 }
 .light .apple-glass {
-  background: rgba(255, 255, 255, 0.55) !important;
-  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background: rgba(255, 255, 255, 0.42) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
   box-shadow: 
-    0 4px 30px rgba(0, 0, 0, 0.05),
-    inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+    0 10px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85) !important;
 }
 .light .apple-glass:hover {
-  background: rgba(255, 255, 255, 0.65) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
+  background: rgba(255, 255, 255, 0.52) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
   box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.1),
-    inset 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+    0 20px 45px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
 }

@@ -54,8 +54,8 @@ const Navbar = () => {
     <>
       {/* ── TITLE BAR ─────────────────────────────── */}
       <div
-        className="sticky top-0 z-50 term-titlebar"
-        style={{ boxShadow: scrolled ? '0 1px 0 #30363d' : 'none' }}
+        className="fixed top-0 left-0 w-full z-50 term-titlebar"
+        style={{ boxShadow: scrolled ? '0 1px 0 var(--border-dim)' : 'none' }}
       >
         {/* Window chrome row */}
         <div className="flex items-center gap-4 px-5 py-3 border-b" style={{ borderColor: 'var(--border-dim)' }}>

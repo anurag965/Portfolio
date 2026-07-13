@@ -68,7 +68,7 @@ const Terminal = () => {
     return (
         <div 
             onClick={focusInput}
-            className="w-full apple-glass rounded-2xl overflow-hidden font-Mono text-[11px] md:text-[12px] text-gray-300 cursor-text"
+            className="w-full apple-glass-dark rounded-2xl overflow-hidden font-Mono text-[11px] md:text-[12px] text-gray-300 cursor-text"
         >
             {/* Header / Title Bar */}
             <div className="border-b border-white/5 px-4 py-3 flex items-center justify-between select-none" style={{ background: 'rgba(255, 255, 255, 0.02)' }}>
