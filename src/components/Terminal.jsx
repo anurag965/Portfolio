@@ -104,8 +104,15 @@ const Terminal = ({ isOpen = false, onClose }) => {
                         e.stopPropagation();
                         focusInput();
                     }}
-                    className="w-full max-w-3xl glass-hud rounded-2xl overflow-hidden font-mono text-[11px] md:text-[12px] text-gray-300 shadow-2xl flex flex-col max-h-[85vh]"
+                    className="w-full max-w-3xl glass-hud rounded-2xl overflow-hidden font-mono text-[11px] md:text-[12px] text-gray-300 shadow-2xl flex flex-col max-h-[85vh] relative"
+                    style={{
+                        borderColor: 'var(--border-hover)',
+                        boxShadow: '0 25px 60px -15px rgba(0,0,0,0.9), 0 0 35px var(--accent-glow-subtle)',
+                    }}
                 >
+                    {/* HUD scanning radar line */}
+                    <div className="absolute inset-x-0 h-[2px] animate-scanline pointer-events-none" style={{ background: 'linear-gradient(to right, transparent, var(--accent), transparent)' }} />
+
                     {/* Header / Title Bar */}
                     <div className="border-b border-white/10 px-4 py-3 flex items-center justify-between select-none bg-white/[0.02]">
                         <div className="flex items-center gap-2">
@@ -118,12 +125,12 @@ const Terminal = ({ isOpen = false, onClose }) => {
                             <span className="w-3 h-3 bg-green-500/80 rounded-full"></span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold font-mono">guest@anurag-sys:~</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] font-bold font-mono" style={{ color: 'var(--accent)' }}>guest@anurag-sys:~</span>
                             <span className="text-[10px] text-slate-500 hidden sm:inline">[press ESC to exit]</span>
                         </div>
                         <button 
                             onClick={onClose}
-                            className="text-xs text-slate-400 hover:text-white px-2 py-0.5 rounded hover:bg-white/10 transition-colors font-mono"
+                            className="text-xs text-slate-400 hover:text-white px-2 py-0.5 rounded hover:bg-white/10 transition-colors font-mono cursor-pointer"
                         >
                             ✕
                         </button>
@@ -134,16 +141,16 @@ const Terminal = ({ isOpen = false, onClose }) => {
                         {history.map((line, idx) => {
                             if (line.type === 'input') {
                                 return (
-                                    <div key={idx} className="text-sky-400 font-bold font-mono">
+                                    <div key={idx} className="font-bold font-mono" style={{ color: 'var(--accent-light)' }}>
                                         {line.text}
                                     </div>
                                 );
                             }
                             if (line.type === 'neofetch') {
                                 return (
-                                    <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 rounded-xl bg-black/40 border border-white/5 my-2">
+                                    <div key={idx} className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 rounded-xl glass-hud border border-white/10 my-2">
                                         {/* Left Logo */}
-                                        <div className="md:col-span-4 text-sky-400 font-bold leading-relaxed select-none text-[9px] md:text-[11px] hidden md:block font-mono">
+                                        <div className="md:col-span-4 font-bold leading-relaxed select-none text-[9px] md:text-[11px] hidden md:block font-mono" style={{ color: 'var(--accent)' }}>
 {`      _   _ _____ 
      | | | |  ___|
      | | | | |__  
@@ -156,63 +163,70 @@ const Terminal = ({ isOpen = false, onClose }) => {
                                         </div>
                                         {/* Right Details */}
                                         <div className="md:col-span-8 space-y-1 text-gray-300 text-[11px] md:text-[12px] leading-relaxed font-mono">
-                                            <div className="text-slate-400 font-bold"><span className="text-sky-400">anurag</span>@<span className="text-blue-500">github</span></div>
-                                            <div className="border-b border-dashed border-gray-800 my-1.5" />
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">OS:</span> <span className="text-emerald-400 font-bold">Research Mode [ON]</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Host:</span> <span>IIT Mandi (Research Intern, Prof. Aditya Nigam)</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Status:</span> <span>VIT Chennai ('27)</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Kernel:</span> <span className="text-yellow-400">PyTorch 2.x / CUDA 12.1</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Languages:</span> <span className="text-gray-200">Python, C, C++, Java, Kotlin</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">ML Stack:</span> <span className="text-gray-300">PyTorch, Transformers, llama.cpp, SimpleITK, PyWavelets, ONNX</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Research:</span> <span className="text-gray-300">Diffusion Models, Mamba, Medical AI, GANs, VLMs, EdgeAI</span></div>
-                                            <div><span className="text-sky-400 font-semibold block md:inline-block md:w-24">Focus:</span> <span className="text-gray-300">AI for Social Good</span></div>
+                                            <div className="text-slate-400 font-bold">
+                                                <span style={{ color: 'var(--accent)' }}>anurag</span>@<span style={{ color: 'var(--accent-light)' }}>github</span>
+                                            </div>
+                                            <div className="border-b border-dashed border-white/10 my-1.5" />
+                                            <div>
+                                                <span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>OS:</span>
+                                                <span className="px-2 py-0.5 rounded text-[10px] font-semibold font-mono" style={{ backgroundColor: 'var(--accent-badge-bg)', borderColor: 'var(--accent-badge-border)', color: 'var(--accent-badge-text)', border: '1px solid var(--accent-badge-border)' }}>
+                                                    RESEARCH MODE [ON]
+                                                </span>
+                                            </div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Host:</span> <span>IIT Mandi (Research Intern, Prof. Aditya Nigam)</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Status:</span> <span>VIT Chennai ('27)</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Kernel:</span> <span className="font-semibold" style={{ color: 'var(--accent-light)' }}>PyTorch 2.x / CUDA 12.1</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Languages:</span> <span className="text-gray-200">Python, C, C++, Java, Kotlin</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>ML Stack:</span> <span className="text-gray-300">PyTorch, Transformers, llama.cpp, SimpleITK, ONNX</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Research:</span> <span className="text-gray-300">Diffusion Models, Mamba, Medical AI, Edge VLMs</span></div>
+                                            <div><span className="font-semibold block md:inline-block md:w-24" style={{ color: 'var(--accent)' }}>Focus:</span> <span className="text-gray-300">AI for Social Good &amp; Spatial Assistive Tech</span></div>
                                         </div>
                                     </div>
                                 );
                             }
                             if (line.type === 'help') {
                                 return (
-                                    <div key={idx} className="space-y-1 font-mono text-gray-300">
-                                        <div className="text-sky-400 font-bold">Available commands:</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">neofetch</span> - Display system specifications & profile ASCII</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">skills</span> - List deep learning framework stack</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">projects</span> - Show key repositories and active links</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">contact</span> - Print active uplink vectors</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">quote</span> - Fetch Anurag's motto</div>
-                                        <div>  <span className="text-emerald-400 font-semibold inline-block w-24">clear</span> - Clear the console terminal screen</div>
+                                    <div key={idx} className="space-y-1.5 font-mono text-gray-300 p-3 rounded-xl glass-hud border border-white/5 my-2">
+                                        <div className="font-bold pb-1 border-b border-white/10" style={{ color: 'var(--accent)' }}>// AVAILABLE SYSTEM COMMANDS:</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>neofetch</span> - Display system specifications &amp; profile ASCII</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>skills</span> - List deep learning framework stack</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>projects</span> - Show key repositories and active links</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>contact</span> - Print active uplink vectors</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>quote</span> - Fetch research motto</div>
+                                        <div>  <span className="font-semibold inline-block w-24" style={{ color: 'var(--accent-light)' }}>clear</span> - Clear console screen</div>
                                     </div>
                                 );
                             }
                             if (line.type === 'skills') {
                                 return (
-                                    <div key={idx} className="p-4 rounded-xl bg-black/40 border border-white/5 my-2 space-y-1.5 font-mono">
-                                        <div className="text-sky-400 font-bold">// CORE SKILLSETS</div>
-                                        <div><span className="text-slate-500">Core:</span>    <span className="text-gray-200">Diffusion Models, Mamba, VLMs, LLMs, Medical AI, EdgeAI</span></div>
-                                        <div><span className="text-slate-500">Frameworks:</span> <span className="text-gray-200">PyTorch, Transformers, llama.cpp, SimpleITK, PyWavelets</span></div>
-                                        <div><span className="text-slate-500">Vision:</span>  <span className="text-gray-200">ViTs, BEiT, YOLO, MediaPipe, OpenCV, Depth-Anything</span></div>
-                                        <div><span className="text-slate-500">Systems:</span> <span className="text-gray-200">CUDA, ONNX Runtime, Git, Linux, Docker, Android JNI</span></div>
+                                    <div key={idx} className="p-4 rounded-xl glass-hud border border-white/5 my-2 space-y-1.5 font-mono">
+                                        <div className="font-bold pb-1 border-b border-white/10" style={{ color: 'var(--accent)' }}>// CORE TECHNICAL SKILLSETS</div>
+                                        <div><span className="text-slate-400">Core:</span>       <span className="text-gray-200">Diffusion Models, Mamba, VLMs, Medical AI, EdgeAI</span></div>
+                                        <div><span className="text-slate-400">Frameworks:</span> <span className="text-gray-200">PyTorch 2.x, Transformers, llama.cpp, SimpleITK</span></div>
+                                        <div><span className="text-slate-400">Vision:</span>     <span className="text-gray-200">ViTs, 3D DWT Wavelets, Depth-Anything, YOLO</span></div>
+                                        <div><span className="text-slate-400">Systems:</span>    <span className="text-gray-200">CUDA, ONNX Runtime, ARM NEON SIMD, Android JNI</span></div>
                                     </div>
                                 );
                             }
                             if (line.type === 'projects') {
                                 return (
-                                    <div key={idx} className="p-4 rounded-xl bg-black/40 border border-white/5 my-2 space-y-2 font-mono">
-                                        <div className="text-sky-400 font-bold">// SELECTED ACTIVE REPOSITORIES</div>
+                                    <div key={idx} className="p-4 rounded-xl glass-hud border border-white/5 my-2 space-y-2 font-mono">
+                                        <div className="font-bold pb-1 border-b border-white/10" style={{ color: 'var(--accent)' }}>// ACTIVE RESEARCH REPOSITORIES</div>
                                         <div className="space-y-2">
                                             <div>
-                                                <a href="https://github.com/anurag965/DrishtiAI-preview" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">1. DrishtiAI</a>
-                                                <span className="text-gray-400 block text-[10px] pl-4">100% offline spatial vision assistant with SmolVLM2 & llama.cpp (13.5+ tok/s).</span>
+                                                <a href="https://github.com/anurag965/DrishtiAI-preview" target="_blank" rel="noreferrer" className="font-bold hover:underline" style={{ color: 'var(--accent-light)' }}>1. DrishtiAI</a>
+                                                <span className="text-gray-400 block text-[10px] pl-4">100% offline spatial vision assistant with SmolVLM2 &amp; llama.cpp (13.5+ tok/s).</span>
                                             </div>
                                             <div>
-                                                <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">2. Uncertainty-Aware MRI-to-sCT Synthesis</a>
+                                                <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="font-bold hover:underline" style={{ color: 'var(--accent-light)' }}>2. Uncertainty-Aware MRI-to-sCT Synthesis</a>
                                                 <span className="text-gray-400 block text-[10px] pl-4">Wavelet U-Net++ with 3D DWT and deep ensembles (99.9% ENCE reduction).</span>
                                             </div>
                                             <div>
-                                                <a href="https://github.com/anurag965/SentinelVision" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">3. CMCA-ActionNet</a>
+                                                <a href="https://github.com/anurag965/SentinelVision" target="_blank" rel="noreferrer" className="font-bold hover:underline" style={{ color: 'var(--accent-light)' }}>3. CMCA-ActionNet</a>
                                                 <span className="text-gray-400 block text-[10px] pl-4">Cross-modal causal spatio-temporal action recognition (84% on JHMDB).</span>
                                             </div>
                                             <div>
-                                                <a href="https://github.com/anurag965/OdiaGenAI_JanaSathi" target="_blank" rel="noreferrer" className="text-emerald-400 font-bold hover:underline">4. JanaSathi Odia E-Gov Chatbot</a>
+                                                <a href="https://github.com/anurag965/OdiaGenAI_JanaSathi" target="_blank" rel="noreferrer" className="font-bold hover:underline" style={{ color: 'var(--accent-light)' }}>4. JanaSathi Odia E-Gov Chatbot</a>
                                                 <span className="text-gray-400 block text-[10px] pl-4">Bilingual RAG chatbot (AMD OdiaGenAI Hackathon 2nd place).</span>
                                             </div>
                                         </div>
@@ -221,12 +235,12 @@ const Terminal = ({ isOpen = false, onClose }) => {
                             }
                             if (line.type === 'contact') {
                                 return (
-                                    <div key={idx} className="p-4 rounded-xl bg-black/40 border border-white/5 my-2 space-y-1.5 font-mono text-[11px] md:text-[12px]">
-                                        <div className="text-sky-400 font-bold">// TERMINAL ACTIVE UPLINKS</div>
-                                        <div><span className="text-slate-500 block md:inline-block md:w-20">Email:</span> <a href="mailto:anuragpradhancb@gmail.com" className="text-emerald-400 hover:underline break-all">anuragpradhancb@gmail.com</a></div>
-                                        <div><span className="text-slate-500 block md:inline-block md:w-20">LinkedIn:</span> <a href="https://www.linkedin.com/in/anurag-pradhan-0340bb288" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline break-all">in/anurag-pradhan-0340bb288</a></div>
-                                        <div><span className="text-slate-500 block md:inline-block md:w-20">Scholar:</span> <a href="https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline break-all">Google Scholar profile</a></div>
-                                        <div><span className="text-slate-500 block md:inline-block md:w-20">GitHub:</span> <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline break-all">github.com/anurag965</a></div>
+                                    <div key={idx} className="p-4 rounded-xl glass-hud border border-white/5 my-2 space-y-1.5 font-mono text-[11px] md:text-[12px]">
+                                        <div className="font-bold pb-1 border-b border-white/10" style={{ color: 'var(--accent)' }}>// TERMINAL ACTIVE UPLINKS</div>
+                                        <div><span className="text-slate-400 block md:inline-block md:w-20">Email:</span> <a href="mailto:anuragpradhancb@gmail.com" className="hover:underline break-all" style={{ color: 'var(--accent-light)' }}>anuragpradhancb@gmail.com</a></div>
+                                        <div><span className="text-slate-400 block md:inline-block md:w-20">LinkedIn:</span> <a href="https://www.linkedin.com/in/anurag-pradhan-0340bb288" target="_blank" rel="noreferrer" className="hover:underline break-all" style={{ color: 'var(--accent-light)' }}>in/anurag-pradhan-0340bb288</a></div>
+                                        <div><span className="text-slate-400 block md:inline-block md:w-20">Scholar:</span> <a href="https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ" target="_blank" rel="noreferrer" className="hover:underline break-all" style={{ color: 'var(--accent-light)' }}>Google Scholar profile</a></div>
+                                        <div><span className="text-slate-400 block md:inline-block md:w-20">GitHub:</span> <a href="https://github.com/anurag965" target="_blank" rel="noreferrer" className="hover:underline break-all" style={{ color: 'var(--accent-light)' }}>github.com/anurag965</a></div>
                                     </div>
                                 );
                             }
@@ -240,7 +254,7 @@ const Terminal = ({ isOpen = false, onClose }) => {
                     </div>
 
                     {/* Quick-Click Command Badges */}
-                    <div className="px-4 py-2.5 border-t border-white/10 flex flex-wrap gap-1.5 items-center bg-white/[0.01]">
+                    <div className="px-4 py-2.5 border-t border-white/10 flex flex-wrap gap-2 items-center bg-white/[0.01]">
                         <span className="text-[10px] uppercase font-bold text-slate-500 mr-1 tracking-widest font-mono select-none">Quick:</span>
                         {['help', 'neofetch', 'skills', 'projects', 'contact', 'quote', 'clear'].map((cmd) => (
                             <button
@@ -250,7 +264,7 @@ const Terminal = ({ isOpen = false, onClose }) => {
                                     e.stopPropagation();
                                     handleCommand(cmd);
                                 }}
-                                className="px-2.5 py-1 bg-white/5 hover:bg-sky-500/20 border border-white/10 hover:border-sky-500/40 rounded text-[10px] text-gray-300 hover:text-sky-300 font-mono transition-all duration-200 cursor-pointer"
+                                className="px-2.5 py-1 glass-chip rounded-lg text-[11px] text-slate-300 hover:text-white font-mono transition-all duration-200 cursor-pointer"
                             >
                                 {cmd}
                             </button>
@@ -258,8 +272,8 @@ const Terminal = ({ isOpen = false, onClose }) => {
                     </div>
 
                     {/* Input Prompt Form */}
-                    <form onSubmit={handleSubmit} className="px-4 py-3 bg-black/40 border-t border-white/10 flex items-center gap-2">
-                        <span className="text-sky-400 font-bold select-none shrink-0 font-mono"><span className="hidden sm:inline">guest@anurag-sys:</span>~$</span>
+                    <form onSubmit={handleSubmit} className="px-4 py-3 bg-black/50 border-t border-white/10 flex items-center gap-2">
+                        <span className="font-bold select-none shrink-0 font-mono" style={{ color: 'var(--accent)' }}><span className="hidden sm:inline">guest@anurag-sys:</span>~$</span>
                         <input 
                             ref={inputRef}
                             type="text" 
