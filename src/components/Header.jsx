@@ -1,133 +1,220 @@
 import React, { useState, useEffect } from 'react'
 import profile_img from '../assets/profile-img.webp'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import SpotlightCard from './SpotlightCard'
 
-const SCRAMBLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*'
-const TARGET = 'ANURAG'
+const rotatingWords = [
+  'Generative AI Models',
+  'Diffusion Architectures',
+  'On-Device Edge VLMs',
+  '3D Medical Synthesis',
+  'Flight Software',
+]
 
-const Header = () => {
-  const [name, setName] = useState('######')
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+}
 
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+}
+
+const focusAreas = [
+  { name: '3D Volumetric Diffusion', icon: '🧬' },
+  { name: 'Mamba & SSM Architectures', icon: '⚡' },
+  { name: 'On-Device Spatial VLMs', icon: '👁️' },
+  { name: 'Flight Software', icon: '🛰️' },
+]
+
+const Header = ({ onOpenTerminal }) => {
+  const [wordIndex, setWordIndex] = useState(0)
+  const [isCardHovered, setIsCardHovered] = useState(false)
+
+  // Rotating headline specialty animation
   useEffect(() => {
-    let iter = 0
-    const id = setInterval(() => {
-      setName(TARGET.split('').map((c, i) =>
-        i < iter ? TARGET[i] : SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)]
-      ).join(''))
-      if (iter >= TARGET.length) clearInterval(id)
-      iter += 0.12
-    }, 45)
-    return () => clearInterval(id)
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length)
+    }, 2800)
+    return () => clearInterval(interval)
   }, [])
 
-  const info = [
-    { label: 'Role', value: 'Deep Learning & CV Researcher', color: 'var(--blue)' },
-    { label: 'Host', value: 'IIT Mandi — Research Intern' },
-    { label: 'Node', value: "VIT Chennai — B.Tech '27" },
-    { label: 'Kernel', value: 'PyTorch 2.x / CUDA 12.1', color: 'var(--yellow)' },
-    { label: 'Stack', value: 'PyTorch · llama.cpp · SmolVLM2 · LangChain' },
-    { label: 'Research', value: 'Generative Modeling · Medical Imaging · VLM Accessibility · EdgeAI' },
-    { label: 'Focus', value: 'AI for Social Good', color: 'var(--blue)' },
-  ]
-
   return (
-    <section id="top" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
-
-      {/* Section heading */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>01</span>
-          <h1 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Profile</h1>
-        </div>
-        <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>System identity &amp; researcher overview</p>
-      </div>
-
-      {/* Prompt */}
-      <div className="term-prompt mb-10">
-        <span className="prompt-char">$</span>
-        <span className="prompt-cmd">neofetch --config ~/.anurag_profile</span>
-        <span className="cursor-blink" />
-      </div>
-
-      {/* Neofetch layout */}
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="flex flex-col md:flex-row gap-12 items-start"
-      >
-        {/* Profile photo */}
-        <div className="relative shrink-0">
-          <div className="absolute -inset-[1px] rounded-lg" style={{ background: 'var(--border-dim)' }} />
-          <div className="relative p-px rounded-lg overflow-hidden">
-            <img
-              src={profile_img}
-              alt="Anurag Pradhan"
-              fetchpriority="high"
-              loading="eager"
-              className="w-44 md:w-52 h-44 md:h-52 object-cover rounded-lg"
-              style={{ filter: 'grayscale(20%) brightness(0.85) contrast(1.1)' }}
-            />
-          </div>
-          {/* Status dot */}
-          <div className="absolute -bottom-1 -right-1 flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-Mono"
-            style={{ background: 'var(--bg-surface)', border: '1px solid var(--border)', color: 'var(--green, #3fb950)' }}>
-            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--green, #3fb950)' }} />
-            online
-          </div>
-        </div>
-
-        {/* Info panel */}
-        <div className="flex-1 space-y-1 font-Mono">
-          {/* Header */}
-          <div className="text-sm mb-1" style={{ color: 'var(--text-secondary)' }}>
-            <span style={{ color: 'var(--blue)' }}>anurag</span>
-            <span style={{ color: 'var(--text-dim)' }}>@</span>
-            <span style={{ color: 'var(--text-secondary)' }}>github</span>
-          </div>
-          <div className="border-b border-dashed mb-4" style={{ borderColor: 'var(--border)' }} />
-
-          {/* Name */}
-          <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 mb-3">
-            <span className="text-sm w-24 shrink-0 font-bold animate-pulse" style={{ color: 'var(--text-secondary)' }}>Name:</span>
-            <span className="text-xl sm:text-2xl font-black tracking-wider" style={{ color: 'var(--text-primary)' }}>
-              {name} <span style={{ color: 'var(--blue)' }}>PRADHAN</span>
-            </span>
-          </div>
-
-          {info.map(({ label, value, color }) => (
-            <div key={label} className="flex flex-col sm:flex-row gap-0.5 sm:gap-4 text-sm leading-relaxed">
-              <span className="text-sm w-24 shrink-0 font-bold" style={{ color: 'var(--text-secondary)' }}>{label}:</span>
-              <span style={{ color: color || 'var(--text-secondary)' }}>{value}</span>
+    <motion.section
+      id="top"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="pt-6 sm:pt-10"
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        
+        {/* Left Column: Headline & Narrative (7 cols) */}
+        <div className="lg:col-span-7 space-y-6 sm:space-y-7">
+          
+          {/* Eyebrow badge */}
+          <motion.div variants={itemVariants}>
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-md text-xs sm:text-sm font-mono text-slate-300 shadow-sm">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: 'var(--accent)' }} />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5" style={{ backgroundColor: 'var(--accent)' }} />
+              </span>
+              <span>AI &amp; Systems Researcher · CSE @ VIT Chennai '27</span>
             </div>
-          ))}
+          </motion.div>
 
-          <div className="border-t border-dashed mt-3" style={{ borderColor: 'var(--border)' }} />
+          {/* Large Bold Headline with Animated Word Switcher */}
+          <motion.div variants={itemVariants} className="space-y-3">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Anurag Pradhan
+            </h1>
+            
+            <div className="h-16 sm:h-20 lg:h-24 flex items-center overflow-hidden">
+              <span className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white mr-3">
+                Engineering
+              </span>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={wordIndex}
+                  initial={{ opacity: 0, y: 35, filter: 'blur(8px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -35, filter: 'blur(8px)' }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-gradient-theme inline-block"
+                >
+                  {rotatingWords[wordIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+          </motion.div>
 
-          {/* Palette */}
-          <div className="flex gap-1.5 py-3">
-            {['#0d1117', '#161b22', '#21262d', '#30363d', '#58a6ff', '#79c0ff', '#e6edf3', '#ffffff'].map((c, i) => (
-              <span key={i} className="w-4 h-4 rounded-sm border" style={{ background: c, borderColor: 'var(--border-dim)' }} />
+          {/* Comfortable, High-Readability Bio */}
+          <motion.p variants={itemVariants} className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed font-normal">
+            I develop cross-modal 3D medical synthesis pipelines using <span className="text-white font-semibold">Diffusion Models &amp; Mamba</span> under Prof. Aditya Nigam at <strong className="text-white font-semibold">IIT Mandi</strong>, and architect 100% offline multimodal vision assistants for on-device spatial accessibility.
+          </motion.p>
+
+          {/* Focus Area Badges with Springy Hover */}
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-2.5 pt-1">
+            {focusAreas.map(f => (
+              <motion.span
+                key={f.name}
+                whileHover={{ scale: 1.08, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-chip text-xs sm:text-sm font-mono text-slate-200 cursor-default"
+              >
+                <span>{f.icon}</span>
+                <span>{f.name}</span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
 
-          {/* CTAs */}
-          <div className="flex flex-wrap gap-3 pt-4">
-            <a href="#contact" className="term-btn">
-              ❯&nbsp;./exec_contact.sh
-            </a>
-            <a
-              href={`${import.meta.env.BASE_URL}Anurag_Pradhan.pdf`}
+          {/* Primary Action Buttons */}
+          <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 pt-3">
+            <motion.a
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              href="#research"
+              className="px-6 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all shadow-lg flex items-center gap-2 group cursor-pointer"
+              style={{
+                backgroundColor: 'var(--accent-btn)',
+                color: 'var(--accent-btn-text)',
+                boxShadow: '0 0 25px var(--accent-glow)',
+              }}
+            >
+              <span>Explore Research &amp; Work</span>
+              <span className="text-sm group-hover:translate-y-1 transition-transform">↓</span>
+            </motion.a>
+
+            <motion.a
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              href={`${import.meta.env.BASE_URL}Anurag_Pradhan_Resume.pdf`}
               target="_blank"
               rel="noreferrer"
-              className="term-btn term-btn-ghost"
+              className="px-5 py-3.5 rounded-xl glass-chip text-sm sm:text-base font-medium text-slate-200 hover:text-white transition-all flex items-center gap-2 group cursor-pointer"
             >
-              ❯&nbsp;wget resume.pdf
-            </a>
-          </div>
+              <span>Curriculum Vitae</span>
+              <span className="text-xs group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+            </motion.a>
+
+            <motion.button
+              whileHover={{ scale: 1.05, y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onOpenTerminal}
+              className="px-4 py-3.5 rounded-xl glass-chip text-xs sm:text-sm font-mono text-slate-400 hover:text-white transition-all flex items-center gap-2 cursor-pointer"
+              title="Open Interactive Terminal"
+            >
+              <span style={{ color: 'var(--accent)' }}>❯_</span>
+              <span>Shell</span>
+              <kbd className="text-[10px] px-1.5 py-0.5 rounded bg-white/10 font-mono">⌘K</kbd>
+            </motion.button>
+          </motion.div>
+
         </div>
-      </motion.div>
-    </section>
+
+        {/* Right Column: Floating 3D Tilt Portrait Card (5 cols) */}
+        <motion.div
+          variants={itemVariants}
+          className="lg:col-span-5 flex flex-col items-center lg:items-end"
+        >
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-full max-w-sm"
+          >
+            <div
+              className="portrait-card group"
+              onMouseEnter={() => setIsCardHovered(true)}
+              onMouseLeave={() => setIsCardHovered(false)}
+            >
+              <SpotlightCard className="w-full p-3 sm:p-3.5 cursor-pointer" tilt={true} spotlightColor="var(--accent-glow)">
+                <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-900 border border-white/10 shadow-2xl">
+                  {/* Profile Photo: Guaranteed smooth transition from black & white to full rich color on hover via both CSS & React */}
+                  <img
+                    src={profile_img}
+                    alt="Anurag Pradhan"
+                    className={`portrait-image w-full h-full object-cover transition-all duration-500 ease-out group-hover:scale-105 ${
+                      isCardHovered ? 'is-hovered' : ''
+                    }`}
+                    style={{
+                      filter: isCardHovered
+                        ? 'grayscale(0%) saturate(130%) contrast(102%) brightness(102%)'
+                        : 'grayscale(100%) contrast(105%) brightness(92%)',
+                      transition: 'filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                  />
+                  
+                  {/* Subtle Gradient vignette (non-blocking pointer events) */}
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent transition-opacity duration-500"
+                    style={{ opacity: isCardHovered ? 0.15 : 0.65 }}
+                  />
+                  
+                  {/* Clean location badge only (no affiliation, no publication, pointer-events-none) */}
+                  <div className="pointer-events-none absolute bottom-4 left-4 flex items-center text-xs font-mono">
+                    <span className="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md border border-white/15 text-slate-300">
+                      Chennai, India
+                    </span>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </div>
+          </motion.div>
+        </motion.div>
+
+      </div>
+    </motion.section>
   )
 }
 

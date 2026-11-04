@@ -1,85 +1,92 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import SpotlightCard from './SpotlightCard'
 
 const education = [
   {
-    id: '01',
-    institution: 'Vellore Institute of Technology',
-    degree: 'Bachelor of Technology in Computer Science',
-    details: 'CGPA: 7.77 / 10.00',
-    duration: 'August 2023 – June 2027',
+    institution: 'Vellore Institute of Technology (VIT Chennai)',
+    degree: 'B.Tech. in Computer Science and Engineering',
+    duration: 'Aug 2023 – Jun 2027',
     location: 'Chennai, India',
+    details: 'Rigorous coursework in Deep Learning, Computer Vision, Algorithms, Distributed Computing, and Mathematical Foundations of Machine Learning.',
+    status: 'Degree Candidate (In Good Standing)',
   },
   {
-    id: '02',
     institution: 'Sri Venkateswara Jr. College',
-    degree: 'Class 12th (MPC)',
-    details: 'Score: 88.4 / 100.00',
-    duration: 'July 2021 – June 2023',
+    degree: 'Higher Secondary (MPC — Mathematics, Physics, Chemistry)',
+    duration: 'Jul 2021 – Jun 2023',
     location: 'Visakhapatnam, India',
-  },
-  {
-    id: '03',
-    institution: 'Sri Chaitanya Techno School',
-    degree: 'Class 10th',
-    details: 'Score: 93.6 / 100.00',
-    duration: 'February 2020 – March 2021',
-    location: 'Visakhapatnam, India',
+    details: 'Intensive foundation in calculus, multivariable optimization, differential equations, and classical mechanics. Final Grade: 88.4%.',
+    status: 'Completed (88.4%)',
   },
 ]
 
-const Education = () => (
-  <section id="education" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+const Education = () => {
+  return (
+    <section id="education" className="space-y-10">
+      
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
+      >
+        <div className="space-y-1.5">
+          <span className="text-xs sm:text-sm font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--accent)' }}>
+            // ACADEMIC FOUNDATION
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Education
+          </h2>
+        </div>
+        <p className="text-sm sm:text-base text-slate-300 max-w-md leading-relaxed">
+          Coursework foundations, mathematical optimization, and degree programs.
+        </p>
+      </motion.div>
 
-    {/* Section heading */}
-    <div className="mb-8">
-      <div className="flex items-center gap-3 mb-1">
-        <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>04</span>
-        <h2 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Education</h2>
-      </div>
-      <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>Academic institutions &amp; grades</p>
-    </div>
-
-    {/* Prompt */}
-    <div className="term-prompt">
-      <span className="prompt-char">$</span>
-      <span className="prompt-cmd">cat ~/education.json</span>
-    </div>
-
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="term-block p-5 font-Mono text-base overflow-hidden"
-    >
-      <div className="text-xs mb-3" style={{ color: 'var(--text-dim)' }}>{'{'}</div>
-      <div className="space-y-4 pl-4">
-        {education.map((edu, i) => (
-          <div key={edu.id} className="relative pl-4 border-l-2" style={{ borderColor: 'var(--blue-border)' }}>
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-4">
-              <span className="font-bold text-base" style={{ color: 'var(--text-primary)' }}>
-                "{edu.institution}"
-              </span>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs" style={{ color: 'var(--text-dim)' }}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {education.map((edu) => (
+          <SpotlightCard
+            key={edu.institution}
+            className="p-7 sm:p-9 flex flex-col justify-between group cursor-default space-y-6"
+            tilt={true}
+            spotlightColor="var(--accent-glow)"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] text-xs sm:text-sm font-mono text-slate-400">
                 <span>{edu.duration}</span>
-                <span className="hidden sm:inline">&middot;</span>
                 <span>{edu.location}</span>
               </div>
-            </div>
-            <div className="text-sm mt-1 pl-2 space-y-0.5">
-              <div>
-                <span style={{ color: 'var(--blue)' }}>degree:</span> <span style={{ color: 'var(--text-secondary)' }}>"{edu.degree}"</span>
+
+              <div className="space-y-1.5">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight group-hover:text-[var(--accent-light)] transition-colors">
+                  {edu.institution}
+                </h3>
+                <div className="text-base sm:text-lg font-mono font-medium" style={{ color: 'var(--accent-light)' }}>
+                  {edu.degree}
+                </div>
               </div>
-              <div>
-                <span style={{ color: 'var(--blue)' }}>performance:</span> <span style={{ color: 'var(--yellow)' }}>"{edu.details}"</span>
-              </div>
+
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans">
+                {edu.details}
+              </p>
             </div>
-          </div>
+
+            <div className="pt-4 border-t border-white/[0.08] flex items-center justify-between text-xs sm:text-sm font-mono text-slate-400">
+              <span>Status</span>
+              <span className="font-medium flex items-center gap-1.5" style={{ color: 'var(--accent-light)' }}>
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: 'var(--accent)' }} />
+                {edu.status}
+              </span>
+            </div>
+          </SpotlightCard>
         ))}
       </div>
-      <div className="text-xs mt-3" style={{ color: 'var(--text-dim)' }}>{'}'}</div>
-    </motion.div>
-  </section>
-)
+
+    </section>
+  )
+}
 
 export default Education

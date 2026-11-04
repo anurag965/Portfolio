@@ -1,144 +1,127 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import SpotlightCard from './SpotlightCard'
+
+const channels = [
+  {
+    name: 'Direct Email',
+    value: 'anuragpradhancb@gmail.com',
+    href: 'mailto:anuragpradhancb@gmail.com',
+    icon: '✉️',
+    desc: 'Research discussions, lab inquiries & collaborations',
+    isCopy: true,
+  },
+  {
+    name: 'GitHub Repositories',
+    value: 'github.com/anurag965',
+    href: 'https://github.com/anurag965',
+    icon: '🐙',
+    desc: 'Open-source code, training runs & model implementations',
+  },
+  {
+    name: 'LinkedIn Network',
+    value: 'in/anurag-pradhan-0340bb288',
+    href: 'https://www.linkedin.com/in/anurag-pradhan-0340bb288',
+    icon: '💼',
+    desc: 'Professional background, career updates & connections',
+  },
+  {
+    name: 'Google Scholar',
+    value: 'Anurag Pradhan Profile',
+    href: 'https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ',
+    icon: '🎓',
+    desc: 'Citation metrics & peer-reviewed research papers',
+  },
+]
 
 const Contact = () => {
-  const [fields, setFields] = useState({ name: '', email: '', message: '' })
-  const [status, setStatus] = useState('')
-
-  const set = k => e => setFields(f => ({ ...f, [k]: e.target.value }))
-
-  const onSubmit = e => {
-    e.preventDefault()
-    const { name, email, message } = fields
-    window.location.href = `mailto:anuragpradhancb@gmail.com?subject=${encodeURIComponent('Inquiry from ' + name)}&body=${encodeURIComponent(message + '\n\n---\nSender: ' + name + '\nEmail: ' + email)}`
-    setStatus('✓ Mail client opened. Message ready to send.')
-    setFields({ name: '', email: '', message: '' })
-  }
+  const [copied, setCopied] = useState(false)
 
   const copyEmail = () => {
     navigator.clipboard.writeText('anuragpradhancb@gmail.com')
-    setStatus('✓ Email copied to clipboard.')
-    setTimeout(() => setStatus(''), 2000)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2500)
   }
 
   return (
-    <section id="contact" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
-
-      {/* Section heading */}
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>06</span>
-          <h2 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Contact</h2>
-        </div>
-        <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>Initiate uplink connection &amp; networking</p>
-      </div>
-
-      {/* Prompt */}
-      <div className="term-prompt">
-        <span className="prompt-char">$</span>
-        <span className="prompt-cmd">curl -X POST https://anurag-sys/api/v1/contact \</span>
-      </div>
-      <div className="text-sm font-Mono mb-8 pl-4" style={{ color: 'var(--text-dim)' }}>
-        &nbsp;&nbsp;&nbsp;--header "Content-Type: application/json" \<br />
-        &nbsp;&nbsp;&nbsp;--data @payload.json
-      </div>
-
+    <section id="contact" className="space-y-10">
+      
+      {/* Section Header */}
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="term-block overflow-hidden max-w-2xl"
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
       >
-        {/* Request meta */}
-        <div className="px-5 py-3 border-b text-sm font-Mono flex items-center gap-3" style={{ borderColor: 'var(--border-dim)', background: 'var(--bg-hover)' }}>
-          <span className="font-bold px-2 py-0.5 rounded text-sm" style={{ background: 'rgba(59,130,246,0.15)', color: 'var(--blue)' }}>POST</span>
-          <span style={{ color: 'var(--text-secondary)' }}>/api/v1/contact</span>
-          <span className="ml-auto" style={{ color: 'var(--text-dim)' }}>HTTP/1.1</span>
+        <div className="space-y-1.5">
+          <span className="text-xs sm:text-sm font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--accent)' }}>
+            // INQUIRIES &amp; CONNECT
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Connect &amp; Collaborate
+          </h2>
         </div>
-
-        {/* Form */}
-        <form onSubmit={onSubmit} className="px-5 py-6 space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {[
-              { key: 'name',  label: '"name"',  type: 'text',  ph: 'John Doe' },
-              { key: 'email', label: '"email"', type: 'email', ph: 'john@example.com' },
-            ].map(f => (
-              <div key={f.key} className="flex flex-col gap-1.5">
-                <label className="text-sm font-Mono" style={{ color: 'var(--text-dim)' }}>{f.label}:</label>
-                <div className="flex items-center gap-1 px-3 py-2 rounded" style={{ background: 'var(--bg)', border: '1px solid var(--border-dim)' }}>
-                  <span className="text-sm" style={{ color: 'var(--text-dim)' }}>"</span>
-                  <input
-                    type={f.type}
-                    value={fields[f.key]}
-                    onChange={set(f.key)}
-                    required
-                    placeholder={f.ph}
-                    className="term-input text-sm"
-                  />
-                  <span className="text-sm" style={{ color: 'var(--text-dim)' }}>"</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-Mono" style={{ color: 'var(--text-dim)' }}>"message":</label>
-            <div className="px-3 py-2 rounded" style={{ background: 'var(--bg)', border: '1px solid var(--border-dim)' }}>
-              <textarea
-                value={fields.message}
-                onChange={set('message')}
-                required
-                rows={5}
-                placeholder="// your message..."
-                className="term-input text-sm resize-none leading-relaxed"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <button type="submit" className="term-btn text-sm">
-              ❯ send --exec
-            </button>
-            <button type="button" onClick={copyEmail} className="term-btn term-btn-ghost text-sm">
-              ❯ pbcopy &lt;email&gt;
-            </button>
-          </div>
-
-          {status && (
-            <div className="text-sm font-Mono pt-2" style={{ color: 'var(--green, #3fb950)' }}>
-              {status}
-            </div>
-          )}
-        </form>
+        <p className="text-sm sm:text-base text-slate-300 max-w-md leading-relaxed">
+          Open to research discussions, graduate lab discussions, and engineering opportunities.
+        </p>
       </motion.div>
 
-      {/* Uplinks */}
-      <div className="mt-10">
-        <div className="term-section-heading">
-          <span style={{ color: 'var(--blue)' }}>//</span>
-          <span>uplinks</span>
-        </div>
-        <div className="space-y-2">
-          {[
-            ['Email',    'anuragpradhancb@gmail.com',                    'mailto:anuragpradhancb@gmail.com'],
-            ['GitHub',   'github.com/anurag965',                         'https://github.com/anurag965'],
-            ['LinkedIn', 'linkedin.com/in/anurag-pradhan-0340bb288',     'https://www.linkedin.com/in/anurag-pradhan-0340bb288'],
-            ['Scholar',  'Google Scholar — Anurag Pradhan',              'https://scholar.google.co.in/citations?hl=en&user=_cFdzngAAAAJ'],
-          ].map(([label, display, href]) => (
-            <div key={label} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-5 text-sm font-Mono">
-              <span className="w-24 text-sm shrink-0" style={{ color: 'var(--text-dim)' }}>{label}:</span>
-              <a href={href} target="_blank" rel="noreferrer"
-                className="transition-colors text-sm break-all"
-                style={{ color: 'var(--blue)' }}
-                onMouseEnter={e => e.currentTarget.style.textDecoration = 'underline'}
-                onMouseLeave={e => e.currentTarget.style.textDecoration = 'none'}
-              >
-                {display}
-              </a>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {channels.map((ch) => (
+          <SpotlightCard
+            key={ch.name}
+            className="p-6 sm:p-7 shadow-lg"
+            tilt={true}
+            spotlightColor="var(--accent-glow)"
+          >
+            <a
+              href={ch.href}
+              target={ch.isCopy ? undefined : '_blank'}
+              rel="noreferrer"
+              onClick={ch.isCopy ? (e) => { e.preventDefault(); copyEmail(); } : undefined}
+              className="flex items-center justify-between w-full cursor-pointer group"
+            >
+              <div className="flex items-center gap-4 sm:gap-5">
+                <span className="w-12 h-12 rounded-2xl glass-chip flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-all shadow-sm">
+                  {ch.icon}
+                </span>
+                <div className="space-y-1">
+                  <div className="text-base sm:text-lg font-bold text-white group-hover:text-[var(--accent-light)] transition-colors">
+                    {ch.name}
+                  </div>
+                  <div className="text-xs sm:text-sm font-mono text-slate-300 break-all">
+                    {ch.value}
+                  </div>
+                  <div className="text-xs sm:text-sm text-slate-400 font-sans">
+                    {ch.desc}
+                  </div>
+                </div>
+              </div>
+
+              <span className="text-slate-500 group-hover:text-[var(--accent)] transition-all text-sm shrink-0 font-mono ml-2">
+                {ch.isCopy ? (copied ? '✓' : 'Copy') : '↗'}
+              </span>
+            </a>
+          </SpotlightCard>
+        ))}
       </div>
+
+      <AnimatePresence>
+        {copied && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-center text-sm font-mono pt-2 flex items-center justify-center gap-2"
+            style={{ color: 'var(--accent-light)' }}
+          >
+            <span className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: 'var(--accent)' }} />
+            <span>✓ Email copied to clipboard (anuragpradhancb@gmail.com)</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   )
 }

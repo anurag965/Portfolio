@@ -46,7 +46,7 @@ const GutterSidebars = () => {
               <span>📁</span> <span>public</span>
             </div>
             <div className="pl-4 opacity-40">
-              <span>📄</span> <span className="hover:text-blue-400">Anurag_Pradhan.pdf</span>
+              <span>📄</span> <span className="hover:text-blue-400">Anurag_Pradhan_Resume.pdf</span>
             </div>
             
             <div className="flex items-center gap-1.5">

@@ -1,59 +1,92 @@
-import React, { useState } from 'react'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
+import React, { useState, useEffect } from 'react'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import { ThemeProvider } from './context/ThemeContext'
+import InteractiveCanvas from './components/InteractiveCanvas'
+import Navbar from './components/Navbar'
+import Header from './components/Header'
+import TechMarquee from './components/TechMarquee'
 import Work from './components/Work'
 import Experience from './components/Experience'
-import Education from './components/Education'
 import About from './components/About'
-import Header from './components/Header'
-import Navbar from './components/Navbar'
-import GutterSidebars from './components/GutterSidebars'
+import Education from './components/Education'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+import Terminal from './components/Terminal'
 import ScrollToTop from './components/ScrollToTop'
-import LoadingScreen from './components/LoadingScreen'
-import { AnimatePresence } from 'framer-motion'
 
-const App = () => {
-  const [isLoading, setIsLoading] = useState(true)
+const AppContent = () => {
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  })
+
+  // Global CMD+K shortcut to toggle interactive terminal
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setIsTerminalOpen(prev => !prev)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
-      </AnimatePresence>
+    <div className="min-h-screen text-slate-100 font-sans selection:bg-white/20 selection:text-white relative overflow-x-hidden">
+      
+      {/* Top Reading Progress Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2.5px] origin-left z-50 pointer-events-none shadow-md"
+        style={{
+          scaleX,
+          backgroundColor: 'var(--accent)',
+          boxShadow: '0 0 12px var(--accent)',
+        }}
+      />
 
-      {/* Subtle CRT overlays */}
-      <div className="crt-scanlines" aria-hidden="true" />
-      <div className="crt-vignette"  aria-hidden="true" />
-      <div className="crt-beam"      aria-hidden="true" />
-      <div className="crt-grid"      aria-hidden="true" />
+      {/* Interactive Neural Constellation Canvas */}
+      <InteractiveCanvas />
 
-      {/* Apple Glass Background Blobs */}
-      <div className="glass-bg-blobs" aria-hidden="true">
-        <div className="glass-blob glass-blob-1" />
-        <div className="glass-blob glass-blob-2" />
-        <div className="glass-blob glass-blob-3" />
-      </div>
+      {/* Subtle Geometric Grid & Atmospheric Theme Glows */}
+      <div className="ambient-grid" aria-hidden="true" />
+      <div className="ambient-glow-1" aria-hidden="true" />
+      <div className="ambient-glow-2" aria-hidden="true" />
 
-      <div
-        className={`relative z-10 min-h-screen flex flex-col transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-        style={{ background: 'transparent' }}
-      >
-        <Navbar />
-        <GutterSidebars />
+      {/* Floating Island Navigation */}
+      <Navbar onOpenTerminal={() => setIsTerminalOpen(true)} />
 
-        <main className="flex-1 w-full max-w-5xl mx-auto px-4 md:px-12 pt-20 pb-10 md:pt-32 md:pb-16 font-Mono">
-          <Header />
-          <About />
-          <Experience />
-          <Education />
-          <Work />
-          <Contact />
-        </main>
+      {/* Main Content Area */}
+      <main className="relative z-10 max-w-6xl mx-auto px-5 sm:px-8 md:px-10 pt-32 pb-28 space-y-28">
+        <Header onOpenTerminal={() => setIsTerminalOpen(true)} />
+        <TechMarquee />
+        <Work />
+        <Experience />
+        <About />
+        <Education />
+        <Contact />
+      </main>
 
-        <Footer />
-        <ScrollToTop />
-      </div>
-    </>
+      <Footer onOpenTerminal={() => setIsTerminalOpen(true)} />
+      <ScrollToTop />
+
+      {/* Interactive CLI Terminal Modal */}
+      <Terminal
+        isOpen={isTerminalOpen}
+        onClose={() => setIsTerminalOpen(false)}
+      />
+    </div>
+  )
+}
+
+const App = () => {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   )
 }
 

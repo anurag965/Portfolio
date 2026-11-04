@@ -1,120 +1,147 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import SpotlightCard from './SpotlightCard'
 
 const experiences = [
   {
-    id: '01',
-    company: 'IIT Mandi',
-    role: 'Research Intern',
-    duration: 'May 2026 – June 2026',
+    company: 'Indian Institute of Technology Mandi (IIT Mandi)',
+    role: 'Research Intern — Medical AI & Generative Modeling',
+    advisor: 'Advisor: Prof. Aditya Nigam',
+    duration: 'May 2026 – Present',
     location: 'Mandi, Himachal Pradesh',
-    file: 'iit_mandi_internship.md',
     details: [
-      'Conducted research in medical imaging under the guidance of Dr. Aditya Nigam, focusing on MRI-to-synthetic CT (sCT) reconstruction for radiotherapy planning and disease detection.',
-      'Explored and evaluated generative deep learning approaches including VAEs, GANs, and diffusion models for cross-modal image synthesis.',
+      'Investigating 3D cross-modal volumetric reconstruction for radiotherapy planning, focusing on diffusion and state-space model architectures for MRI-to-CT translation.',
+      'Designing sliding-window DDPM patch inference schemes and 3D wavelet spatial decompositions to address severe GPU memory bottlenecks during full-volume clinical scan generation.',
+      'Collaborating with lab researchers on clinical dosimetry metrics (DVH, Gamma passing rates) and uncertainty quantification under Prof. Aditya Nigam.',
     ],
-    tags: ['Generative Models', 'VAE', 'GAN', 'Diffusion', 'Vision Encoders', 'Deep Learning'],
+    tags: ['Diffusion Models', 'Mamba', 'SimpleITK', 'Volumetric Synthesis', 'PyTorch'],
   },
   {
-    id: '02',
-    company: 'National Aluminium Company Ltd (NALCO)',
-    role: 'Computer Science Intern',
-    duration: 'June 2025 – July 2025',
-    location: 'Damanjodi, Odisha',
-    file: 'nalco_internship.md',
-    details: [
-      'Worked on Respiguard AI, an AI-based respiratory safety system for mining environments.',
-      'Improved hazard detection reliability using deep-learning-based visual analysis and custom model architectures.',
-    ],
-    tags: ['Custom YOLOv5', 'PyTorch', 'Data Augmentation', 'Model Evaluation'],
-  },
-  {
-    id: '03',
     company: 'Team Ignition, VIT Chennai',
     role: 'Flight Software Lead',
+    advisor: 'Flight & Competition Software Division',
     duration: 'Apr 2024 – Apr 2026',
-    location: 'On Site',
-    file: 'flight_software_lead.md',
+    location: 'Chennai, India',
     details: [
-      'Developed flight software for model rockets, including fin actuator control, stability algorithms, onboard video stabilization, and Kalman-based state estimation.',
+      'Led the avionics software sub-team across 3 national CanSat competition campaigns, securing 1st place in all three.',
+      'Architected microcontroller firmware (C/C++) featuring Kalman filter state estimation, PID fin actuation, and fail-safe recovery logic on low-power telemetry radios.',
+      'Engineered ground station telemetry parsing scripts, raising packet decode reliability and diagnostic logging during live drop tests.',
     ],
-    tags: ['Arduino', 'C/C++', 'PID Control', 'Image Processing', 'Deep Learning'],
+    tags: ['Embedded C/C++', 'State Estimation', 'PID Control', 'Telemetry Protocols', 'Avionics'],
+  },
+  {
+    company: 'National Aluminium Company Ltd (NALCO)',
+    role: 'Computer Science Intern',
+    advisor: 'Occupational Health & Industrial Automation',
+    duration: 'Jun 2025 – Jul 2025',
+    location: 'Damanjodi, Odisha',
+    details: [
+      'Developed and evaluated an automated computer-aided diagnosis pipeline for early respiratory disease detection in high-risk mine workers.',
+      'Fine-tuned object detection and classification models across the NIH ChestX-ray14 benchmark (112,000+ radiographs), utilizing class-weighted loss and domain-specific augmentations to tackle severe pathology imbalances.',
+    ],
+    tags: ['Computer Vision', 'PyTorch', 'Data Augmentation', 'Medical Imaging'],
   },
 ]
 
-const Experience = () => (
-  <section id="experience" className="py-10 md:py-16" style={{ borderBottom: '1px solid var(--border-dim)' }}>
+const Experience = () => {
+  return (
+    <section id="experience" className="space-y-10">
+      
+      {/* Section Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6"
+      >
+        <div className="space-y-1.5">
+          <span className="text-xs sm:text-sm font-mono uppercase tracking-wider font-semibold" style={{ color: 'var(--accent)' }}>
+            // LAB CHRONOLOGY
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Research &amp; Engineering Experience
+          </h2>
+        </div>
+        <p className="text-sm sm:text-base text-slate-300 max-w-md leading-relaxed">
+          Contributions across premier university research labs, competitive flight software divisions, and industrial health AI.
+        </p>
+      </motion.div>
 
-    {/* Section heading */}
-    <div className="mb-8">
-      <div className="flex items-center gap-3 mb-1">
-        <span className="text-xs font-Mono font-bold px-2 py-0.5 rounded" style={{ background: 'var(--blue-subtle)', color: 'var(--blue)' }}>03</span>
-        <h2 className="text-3xl font-black tracking-tight" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-mono)' }}>Experience</h2>
-      </div>
-      <p className="text-sm ml-9" style={{ color: 'var(--text-dim)' }}>Professional internships &amp; software leadership roles</p>
-    </div>
+      {/* Editorial Timeline with Energy Traveling Pulse */}
+      <div className="space-y-8 relative">
+        <div className="hidden md:block absolute left-4 top-4 bottom-4 w-px bg-white/10" />
 
-    {/* Prompt */}
-    <div className="term-prompt">
-      <span className="prompt-char">$</span>
-      <span className="prompt-cmd">ls -la ~/experience/</span>
-    </div>
-
-    {/* Listing header */}
-    <div className="text-sm font-Mono mb-6" style={{ color: 'var(--text-dim)' }}>
-      total 3 &nbsp;&nbsp; drwxr-xr-x &nbsp; anurag &nbsp; anurag &nbsp; Jul 2026
-    </div>
-
-    <div className="space-y-6">
-      {experiences.map((exp, i) => (
+        {/* Traveling Energy Pulse Beam */}
         <motion.div
-          key={exp.id}
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.1 }}
-          viewport={{ once: true }}
-          className="term-block overflow-hidden"
-        >
-          {/* File header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-3 px-4 py-2.5 text-xs sm:text-sm font-Mono border-b" style={{ borderColor: 'var(--border-dim)', background: 'rgba(255, 255, 255, 0.02)' }}>
-            <div className="flex items-center gap-2.5">
-              <span style={{ color: 'var(--text-dim)' }}>-rwxr-xr-x</span>
-              <span style={{ color: 'var(--text-dim)' }}>anurag</span>
-            </div>
-            <span style={{ color: 'var(--blue)' }} className="break-all sm:flex-1">~/experience/{exp.file}</span>
-            <span className="font-bold sm:ml-auto" style={{ color: 'var(--text-secondary)' }}>{exp.company}</span>
-          </div>
+          animate={{ top: ['0%', '95%'] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: 'linear' }}
+          className="hidden md:block absolute left-[15px] w-1 h-14 rounded-full pointer-events-none z-10"
+          style={{
+            background: 'linear-gradient(to bottom, transparent, var(--accent), transparent)',
+            boxShadow: '0 0 10px var(--accent)',
+          }}
+        />
 
-          {/* Content */}
-          <div className="px-5 py-4 space-y-3">
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 text-sm font-Mono">
-              <span className="font-bold text-base" style={{ color: 'var(--text-primary)' }}>{exp.role}</span>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs" style={{ color: 'var(--text-dim)' }}>
-                <span>{exp.duration}</span>
-                <span className="hidden sm:inline">·</span>
-                <span>{exp.location}</span>
+        {experiences.map((exp, idx) => (
+          <motion.div
+            key={exp.company}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={{ duration: 0.5, delay: idx * 0.1 }}
+            className="md:pl-14 relative"
+          >
+            {/* Pulsing Timeline Node */}
+            <div className="hidden md:flex absolute left-2.5 top-7 items-center justify-center">
+              <span className="relative flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: 'var(--accent)' }} />
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-slate-950 border-2" style={{ borderColor: 'var(--accent)' }} />
+              </span>
+            </div>
+
+            <SpotlightCard className="p-7 sm:p-8 space-y-5" tilt={false} spotlightColor="var(--accent-glow)">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 border-b border-white/[0.08]">
+                <div className="space-y-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                    {exp.role}
+                  </h3>
+                  <div className="text-base sm:text-lg font-semibold font-mono" style={{ color: 'var(--accent-light)' }}>
+                    {exp.company}
+                  </div>
+                  <div className="text-xs sm:text-sm text-slate-400 font-sans">
+                    {exp.advisor} · {exp.location}
+                  </div>
+                </div>
+
+                <div className="px-3 py-1.5 rounded-lg glass-chip text-xs sm:text-sm font-mono text-slate-300 shrink-0 self-start">
+                  {exp.duration}
+                </div>
               </div>
-            </div>
 
-            <ul className="space-y-2.5 mb-4">
-              {exp.details.map((detail, j) => (
-                <li key={j} className="flex gap-2.5 text-base" style={{ color: 'var(--text-secondary)' }}>
-                  <span style={{ color: 'var(--blue)' }} className="shrink-0">▸</span>
-                  <span>{detail}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="space-y-3 text-base sm:text-lg text-slate-300 leading-relaxed font-sans">
+                {exp.details.map((detail, dIdx) => (
+                  <li key={dIdx} className="flex gap-3">
+                    <span className="font-mono select-none text-base" style={{ color: 'var(--accent)' }}>›</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="flex flex-wrap gap-2">
-              {exp.tags.map(t => (
-                <span key={t} className="term-badge">{t}</span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </section>
-)
+              <div className="pt-3 flex flex-wrap gap-2 border-t border-white/[0.06]">
+                {exp.tags.map(t => (
+                  <span key={t} className="tech-pill">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </SpotlightCard>
+          </motion.div>
+        ))}
+      </div>
+
+    </section>
+  )
+}
 
 export default Experience

@@ -1,180 +1,127 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import ThemeSwitcher from './ThemeSwitcher'
 
 const navLinks = [
-  { name: 'home',       href: '#top',        id: 'top' },
-  { name: 'about',      href: '#about',      id: 'about' },
-  { name: 'experience', href: '#experience', id: 'experience' },
-  { name: 'education',  href: '#education',  id: 'education' },
-  { name: 'work',       href: '#work',       id: 'work' },
-  { name: 'contact',    href: '#contact',    id: 'contact' },
+  { name: 'Research', href: '#research' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Education', href: '#education' },
+  { name: 'Contact', href: '#contact' },
 ]
 
-const Navbar = () => {
-  const sideMenuRef = useRef()
-  const [activeSection, setActiveSection] = useState('top')
+const Navbar = ({ onOpenTerminal }) => {
   const [scrolled, setScrolled] = useState(false)
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'dark'
-  })
+  const [activeSection, setActiveSection] = useState('')
 
   useEffect(() => {
-    if (theme === 'light') {
-      document.documentElement.classList.add('light')
-    } else {
-      document.documentElement.classList.remove('light')
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+
+      const sections = ['research', 'experience', 'skills', 'education', 'contact']
+      const scrollPos = window.scrollY + 250
+      for (const section of sections) {
+        const el = document.getElementById(section)
+        if (el) {
+          const top = el.offsetTop
+          const height = el.offsetHeight
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
     }
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
-  const openMenu = () => {
-    sideMenuRef.current.style.transform = 'translateX(0)'
-    document.body.style.overflow = 'hidden'
-  }
-  const closeMenu = () => {
-    sideMenuRef.current.style.transform = 'translateX(-100%)'
-    document.body.style.overflow = 'auto'
-  }
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-
-    const observer = new IntersectionObserver(
-      es => es.forEach(e => e.isIntersecting && setActiveSection(e.target.id)),
-      { threshold: 0.5 }
-    )
-    navLinks.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
-    return () => { window.removeEventListener('scroll', onScroll); observer.disconnect() }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <>
-      {/* ── TITLE BAR ─────────────────────────────── */}
+    <motion.header
+      initial={{ y: -60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="fixed top-0 left-0 w-full z-50 px-4 sm:px-8 pt-5 pointer-events-none"
+    >
       <div
-        className="fixed top-0 left-0 w-full z-50 term-titlebar"
-        style={{ boxShadow: scrolled ? '0 1px 0 var(--border-dim)' : 'none' }}
+        className={`max-w-6xl mx-auto flex items-center justify-between pointer-events-auto transition-all duration-300 px-5 py-3 rounded-2xl ${
+          scrolled
+            ? 'glass-hud shadow-2xl shadow-black/80'
+            : 'glass-panel'
+        }`}
       >
-        {/* Window chrome row */}
-        <div className="flex items-center gap-4 px-5 py-3 border-b" style={{ borderColor: 'var(--border-dim)' }}>
-          {/* Traffic lights */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            <span className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: '#febc2e' }} />
-            <span className="w-3 h-3 rounded-full" style={{ background: '#28c840' }} />
-          </div>
-
-          {/* Path breadcrumb */}
-          <div className="hidden md:flex items-center gap-1 text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>
-            <span>~/anurag-pradhan</span>
-            <span style={{ color: 'var(--border)' }}>/</span>
-            <span style={{ color: 'var(--blue)' }}>portfolio</span>
-            <span style={{ color: 'var(--border)' }}>—</span>
-            <span style={{ color: 'var(--green, #3fb950)' }}>●</span>
-            <span className="ml-0.5">main</span>
-          </div>
-
-          <div className="flex-1" />
-
-          {/* Status */}
-          <div className="hidden md:flex items-center gap-3 text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>
-            <span>bash</span>
-            <span style={{ color: 'var(--border)' }}>·</span>
-            <span>UTF-8</span>
-          </div>
-
-          {/* Theme switcher */}
-          <button 
-            onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-            className="flex items-center justify-center p-1.5 rounded border transition-all duration-200 hover:scale-105"
-            style={{ 
-              borderColor: 'var(--border)', 
-              color: 'var(--text-primary)',
-              background: 'var(--bg-hover)',
-              fontSize: '14px',
-              cursor: 'pointer'
-            }}
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+        {/* Brand */}
+        <a href="#top" className="flex items-center gap-3 group">
+          <motion.span
+            whileHover={{ scale: 1.08 }}
+            className="w-9 h-9 rounded-xl glass-chip flex items-center justify-center text-sm font-mono font-bold text-white group-hover:border-[var(--accent)] group-hover:text-[var(--accent)] transition-all shadow-sm"
           >
-            {theme === 'dark' ? '☀️' : '🌙'}
-          </button>
+            AP
+          </motion.span>
+          <span className="font-semibold text-base tracking-tight text-white group-hover:text-[var(--accent)] transition-colors">
+            Anurag Pradhan
+          </span>
+        </a>
 
-          {/* Hire Me */}
-          <a href="#contact" className="term-btn text-xs hidden sm:inline-flex">
-            ./hire_me.sh
-          </a>
+        {/* Center Nav Links */}
+        <nav className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full glass-chip">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.substring(1)
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`relative px-3.5 py-1 rounded-full text-sm font-medium transition-all ${
+                  isActive
+                    ? 'text-white bg-white/[0.12] shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]'
+                    : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
+                }`}
+              >
+                {link.name}
+              </a>
+            )
+          })}
+        </nav>
 
-          {/* Mobile menu */}
-          <button onClick={openMenu} className="md:hidden text-lg font-bold font-Mono" style={{ color: 'var(--text-secondary)' }}>
-            ≡
-          </button>
-        </div>
+        {/* Right Actions */}
+        <div className="flex items-center gap-2.5">
+          {/* Aesthetic Theme Switcher */}
+          <ThemeSwitcher />
 
-        {/* Tab bar */}
-        <div className="hidden md:flex items-center px-5 overflow-x-auto" style={{ background: 'var(--bg)' }}>
-          {navLinks.map(({ name, href, id }, i) => (
-            <a
-              key={id}
-              href={href}
-              className={`flex items-center gap-2 px-5 py-2.5 text-xs font-Mono transition-all duration-200 border-b-2 whitespace-nowrap ${
-                activeSection === id ? 'term-tab-active' : 'term-tab-inactive'
-              }`}
-            >
-              <span style={{ color: 'var(--text-dim)', fontSize: '10px' }}>{String(i + 1).padStart(2,'0')}</span>
-              {name}
-            </a>
-          ))}
-        </div>
-      </div>
+          {/* Shell Modal Trigger */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onOpenTerminal}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-xs font-mono text-slate-300 hover:text-white transition-all cursor-pointer"
+            title="Open Interactive Shell (Cmd+K)"
+          >
+            <span className="text-[var(--accent)]">❯_</span>
+            <span>Shell</span>
+            <kbd className="px-1.5 py-0.5 text-[10px] rounded bg-white/10 text-slate-400 font-mono">
+              ⌘K
+            </kbd>
+          </motion.button>
 
-      {/* Mobile overlay */}
-      <div
-        ref={sideMenuRef}
-        className="fixed inset-0 z-[200] -translate-x-full transition-transform duration-500 flex"
-        style={{ background: 'rgba(10, 12, 16, 0.7)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
-      >
-        <div className="w-72 h-full flex flex-col p-8 gap-8 border-r" style={{ borderColor: 'var(--border-dim)', background: 'rgba(15, 20, 30, 0.4)' }}>
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>// navigation</span>
-            <button onClick={closeMenu} className="text-xl font-Mono" style={{ color: 'var(--text-secondary)' }}>✕</button>
-          </div>
-          <ul className="flex flex-col gap-5 mt-2">
-            {navLinks.map(({ name, href, id }, i) => (
-              <li key={id}>
-                <a
-                  href={href}
-                  onClick={closeMenu}
-                  className="flex items-baseline gap-3 text-2xl font-black font-Mono uppercase transition-colors"
-                  style={{ color: activeSection === id ? 'var(--blue)' : 'var(--text-secondary)' }}
-                >
-                  <span className="text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>0{i + 1}.</span>
-                  {name}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-4">
-            <button 
-              onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-              className="flex items-center gap-2 px-4 py-2 rounded border text-sm font-Mono"
-              style={{ 
-                borderColor: 'var(--border)', 
-                color: 'var(--text-primary)',
-                background: 'var(--bg-hover)',
-                cursor: 'pointer'
-              }}
-            >
-              <span>{theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode'}</span>
-            </button>
-          </div>
-          <div className="mt-auto text-xs font-Mono" style={{ color: 'var(--text-dim)' }}>
-            guest@anurag-sys:~$&nbsp;<span className="cursor-blink" />
-          </div>
+          {/* Curriculum Vitae Download */}
+          <motion.a
+            whileHover={{ scale: 1.05, y: -1 }}
+            whileTap={{ scale: 0.95 }}
+            href={`${import.meta.env.BASE_URL}Anurag_Pradhan_Resume.pdf`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl font-mono font-medium text-xs sm:text-sm transition-all shadow-md"
+            style={{
+              backgroundColor: 'var(--accent-btn)',
+              color: 'var(--accent-btn-text)',
+            }}
+          >
+            <span>Resume</span>
+            <span className="text-xs">↗</span>
+          </motion.a>
         </div>
       </div>
-    </>
+    </motion.header>
   )
 }
 

@@ -6,29 +6,13 @@ export default {
   ],
   theme: {
     extend: {
-      gridTemplateColumns:{
-        'auto': 'repeat(auto-fit, minmax(200px, 1fr))'
-    },
-    fontFamily:{
-        Outfit: ["Outfit", "sans-serif"],
-        Ovo: ["Ovo", "serif"],
-        Mono: ["Fira Code", "monospace"]
-    },
-    animation:{
-        spin_slow: 'spin 6s linear infinite'
-    },
-    colors:{
-        lightHover: '#fcf4ff',
-        darkHover: '#2a004a',
-        darkTheme: '#11001F'
-    },
-    boxShadow:{
-        'black': '4px 4px 0 #000',
-        'white': '4px 4px 0 #fff',
-    } 
+      fontFamily: {
+        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+        mono: ["JetBrains Mono", "Fira Code", "monospace"],
+        Mono: ["JetBrains Mono", "Fira Code", "monospace"]
+      },
     },
   },
-  darkMode: 'selector',
+  darkMode: 'class',
   plugins: [],
 }
-
